@@ -1,0 +1,100 @@
+# Narração resumida do que é para ser feito
+
+Commander recebe comandos através de um arquivo ou de forma manual.
+Envia operação para o Process Manager pelo pipe.
+Process Manager realiza operação instruídas pelo Commander.
+
+# Intruções enviadas pelo Commander.
+
+1. Q: Fim de uma unidade de tempo.
+2. U: Desbloqueie o primeiro processo simulado que está na fila de bloqueados.
+3. P: Imprime o estado atual do sistema (reporter, programa similar ao top).
+4. T: Imprime o tempo de retorno médio e finalize o simulador (chama o reporter e fecha programa).
+
+# Operações que são realizadas pelos programas chamdos no init e pelos chamados a 
+partir dos programas chamados no init.
+
+1. S n: Atualiza o valor da variável inteira para n.
+2. A n: Soma n na variável inteira.
+3. D n: Subtrai n na variável inteira.
+4. B: Bloqueia o processo simulado.
+5. E: Termina o processo simulado.
+6. F n: Cria um novo processo simulado. O novo processo é uma cópia exata do pai. O novo
+processo executa da instrução imediatamente após a instrução F, enquanto o pai continua
+n instruções após F, (Criação de um fork e com troca de imagem utilizando a chamada de sistema 
+execvp ou execve).
+7. R nome do arquivo: Substitui o programa do processo simulado com o programa no arquivo
+nome do arquivo, e atualiza o valor do contador de programa para a primeira instrução do
+novo programa (Novamente a criação de uma cópia de processo com troca de imagem, combinação
+fork + execvp ou execve).
+
+# Como as heurísticas devem ser implementadas pelo escalonador.
+
+O tempo é contado em número de interações (um inteiro) que indica o relógio de CPU, logo
+heurísticas devem ser implementadas levando em consideração a forma de contabilizar o tempo.
+A cada uma unidade de tempo passada uma instrução deve ser executada, esta instrução pode 
+ser o escalonamento de um processo ou apenas para que a CPU continue com a execução do
+processo atual.
+
+# Troca de imagem
+
+A troca de imagem é quando um processo cria um outro processo filho através da chamada fork
+(onde este processo filho compartilha a mesma memória que o processo pai até que uma variável
+seja alterada), depois da criação do processo a troca de imagem é realizada com a chamda de 
+sistema execvp (esta chamada de sistema preserva o id do fork filho criado porém esta troca a código
+do fork copiado para um novo código carregado através de um arquivo ou de um binário do sistema).
+
+# Criação de processos.
+
+Commander: inicialmente este cria o PM, e pode enviar soicitaçoes para o PM criar reporter.
+PM: pode criar outros processos como o init que acorda os demais processos.
+Init: este processo é o init do SO que inicia os processos básicos do SO.
+Demais Processos: podem chamar outros processos de sua categoria.
+
+# Função do reporter
+
+O reporter é um screenshot da tabela de processos do PM, logo ao se criar um fork do 
+PM para este processo nenhuma variável do PM deve ser alerada para que o compartilhamento
+de memória exista entre os dois e possa ser possível imprimir o estado do PM.
+
+# Troca de contexto
+
+É o processo intermediário realizado pelo escalonamento, consiste em salvar os dados do 
+processo em atual execução na CPU para a TabelaPcb e pegar o próximo estado na TabelaPcb
+e manda-lo para execução.
+
+# Valor inteiro 
+Valor inteiro da TabelaPcb e da CPU é a variavel inteira que sofrera as operações
+executadas pelos processos simulados (simula um programa de usuário alterando dados na 
+memória).
+
+# Ponteiro para contador
+
+As intruções dos programas são armazenadas em um ar
+
+# Processos simulados
+
+São arquivos que contem instruções a serem executadas em geral para alterar a variável inteiro.
+Exemplo
+
+S 1000 (muda o valor da variável para 1000).
+A 19 (soma 19 ao valor inteiro atual contido na CPU).
+A 20
+D 23 (subtrai 23 do valor inteiro contido na CPU).
+A 55
+### Observações ###
+
+1º Toda vez que um processo é escalonado ele deve ser executado pela CPU.
+
+2º As intruções de um processo devem ser armazendas em um array contido no programa,
+o que permite a troca de contexto.
+
+3º O pipe é utilizado entre o commander e o PM na passagem de instruções (compartilhamento 
+de memória entre dois processos reais no sistema).
+
+4º O reporter é criado através de fork e com troca de imagem e deve enchergar a memória
+do PM (Parte em que usamos a wait(pid).
+
+5º Os demais processos são instruções simuladas e rodam na CPU simulada logo nao são criados
+forks para estes processos este são apenas adicionados na CPU simulada e seus pais são colocados
+na fila de pronto.
