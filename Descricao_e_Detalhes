@@ -82,6 +82,7 @@ A 19 (soma 19 ao valor inteiro atual contido na CPU).
 A 20
 D 23 (subtrai 23 do valor inteiro contido na CPU).
 A 55
+
 ### Observações ###
 
 1º Toda vez que um processo é escalonado ele deve ser executado pela CPU.
@@ -98,3 +99,29 @@ do PM (Parte em que usamos a wait(pid).
 5º Os demais processos são instruções simuladas e rodam na CPU simulada logo nao são criados
 forks para estes processos este são apenas adicionados na CPU simulada e seus pais são colocados
 na fila de pronto.
+
+### Pseudocodigo geral do programa ###
+
+Enquanto arquivo de instruções nao chagar ao fim
+	Commander le instruções do arquivo
+	Envia instruções para o Process Manager (PM)
+		Se a instrução for um reporter (P ou T)
+			PM cria um fork (filho igual) de si mesmo e espera seu filho acabar
+			chama a chamada execvp
+			e transforma o filho criado em um repoter (faz troca de contexto)
+			repoter utiliza o fato de a memória entre ele e o PM pai estar compartilhada
+			imprime os dados da tabela de processo
+			termina e retorna controle para o PM.
+			Caso for T a instrução termianr o programa.
+		Se nao for Q
+			Encerra mais uma unidade de tempo.
+		Se for U 
+			Desbloqueia um processo da fila de bloqueados e envia para pronto
+fim Enquanto
+
+Lembrando que esse pseudocódigo explica o comportamento de 3 processos (programas executáveis)
+em conjunto isso quer dizer que deve ter um ./commander, ./pm e um ./reporter basicamente.
+			
+
+
+
