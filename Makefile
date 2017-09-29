@@ -10,7 +10,7 @@ SRC = src/cfiles/
 all:	cmder	pmnger	rpter
 
 # Compilação do commander.
-cmder:	cmd.o	commander.o
+cmder:	cmd.o	commander.o 
 	$(CC) cmd.o commander.o -o cmder
 
 cmd.o:	$(SRC)cmd.c

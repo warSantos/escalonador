@@ -122,6 +122,38 @@ fim Enquanto
 Lembrando que esse pseudocódigo explica o comportamento de 3 processos (programas executáveis)
 em conjunto isso quer dizer que deve ter um ./commander, ./pm e um ./reporter basicamente.
 			
+### Funções ###
 
+Commander:
 
+	Funções funcionais.
 
+		* leArquivo. 3 -
+		* enviaComandos. 3 -
+		* Criar Processs Manager. 3 -
+	
+	Funções não funcionais.
+		
+		* Função criar teste (lista de comandos). 3 - 
+
+	
+ProcessManager:
+	
+	Funções funcionais
+		
+		* Receber Comandos (process manager). 3 - 
+		* Criar Processo na tabela. 3 - 
+		* Executa o processos. 1
+		* Escalonar processos. 1,2 - 
+		* Troca o contexto. 2 - 
+		* Troca de imagem. 2 - 
+		* Criar chaveamento Processo reporter. 3 - 	
+	
+	Funções não funcionais
+	
+		* Gerar resultados. 
+		* Controlador de relogio da CPU. 1 - 
+		* Função para criar teste (lista de processos). 3 -
+Reporter:
+	
+	* Impressão na tela. 1 - 

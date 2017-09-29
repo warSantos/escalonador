@@ -32,6 +32,9 @@ typedef struct processo {
     sint prioridade; // coeficiente prioridade do processo na fila de espera dos processo.
     sint tempoInicio; // falta especificar melhor.
     sint tempoAcumulado; // soma de todo tempo gasto pelo processo na CPU.
+    
+    /* Alterar para outro tipo de dado */char *intrucoes; // armazena as intruções do processo.
+    
 } Processo;
 
 // Tipo de dado completo a para trabalhar o process manager.
