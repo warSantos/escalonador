@@ -2,7 +2,7 @@
 
 # Declaração das variáveis de compilação.
 CC = gcc
-FLAGS = -c -Wall -O3
+CFLAGS = -c -Wall -O3
 HDRS = src/headers/
 SRC = src/cfiles/
 	
@@ -10,34 +10,34 @@ SRC = src/cfiles/
 all:	cmder	pmnger	rpter
 
 # Compilação do commander.
-cmder:	cmd.o
-	$(CC) -o cmder
+cmder:	cmd.o	commander.o
+	$(CC) cmd.o commander.o -o cmder
 
-cmd.o:	$(SRC)cmd.c	commander.o
-	$(CC) $(CFLAGS)cmd.c
+cmd.o:	$(SRC)cmd.c
+	$(CC) $(CFLAGS)	$(SRC)cmd.c
 	
-commander.o:	$(HEADERS)commander.h	$(SRC)commander.c
-	$(CC) $(CFLAGS)commander.c
+commander.o:	$(HDRS)commander.h	$(SRC)commander.c
+	$(CC) $(CFLAGS) $(SRC)commander.c
 	
 # Compilação do process manager
-pmnger:	pmanager.o
-	$(CC) -o pmnger
+pmnger:	pmanager.o	pm.o
+	$(CC) pmanager.o pm.o -o pmnger
 
-pmanager.o:	$(SRC)pmanager.c	pm.o
-	$(CC) $(CFLAGS)pmanager.c
+pmanager.o:	$(SRC)pmanager.c
+	$(CC) $(CFLAGS) $(SRC)pmanager.c
 	
-pm.o:	$(HEADERS)pm.h	$(SRC)pm.c
-	$(CC) $(CFLAGS)pm.c
+pm.o:	$(HDRS)pm.h	$(SRC)pm.c
+	$(CC) $(CFLAGS) $(SRC)pm.c
 
 # Compilção do reporter.
-rpter:	rporter.o
-	$(CC) -o rpter
+rpter:	rporter.o	reporter.o
+	$(CC) rporter.o reporter.o -o rpter
 	
-rporter.o:	$(SRC)rporter.c	reporter.o
-	$(CC) $(CFLAGS)rporter.c
+rporter.o:	$(SRC)rporter.c
+	$(CC) $(CFLAGS) $(SRC)rporter.c
 	
-reporter.o:	$(HEADERS)reporter.h	pm.o
-	$(CC) $(CFLAGS)reporter.c
+reporter.o:	$(HDRS)reporter.h
+	$(CC) $(CFLAGS) $(SRC)reporter.c
 	
 # Limpar objetos de compilação
 

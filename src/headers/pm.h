@@ -34,7 +34,8 @@ typedef struct processo {
     sint tempoAcumulado; // soma de todo tempo gasto pelo processo na CPU.
 } Processo;
 
-typedef struct {
+// Tipo de dado completo a para trabalhar o process manager.
+typedef struct tadpm {
     
     sint tempoGeral;
     sint pidExec; // ponteiro (id) para o processo em execução.
@@ -42,6 +43,6 @@ typedef struct {
     sint *pidBloq; // vetor com pids de processos bloqueados.
     Cpu *cpu; // estrutura que simula o processador físico.
     Processo *tabPcb; // tabela que armazena os processos e sua informaçoẽs
-};
+} TadPm;
 
 #endif

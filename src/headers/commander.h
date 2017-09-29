@@ -11,7 +11,7 @@ typedef short int sint;
 void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType);
 
 // Função que le o arquivo de instruções e retorna estas armzenzadas em um vetor.
-char *leArquivo(char *fileCmd);
+sint leArquivo(char *fileCmd, char **cmd);
 
 
 #endif
