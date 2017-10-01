@@ -1,6 +1,6 @@
 /*
- * Estrutura de dados necessárias para simular o Process Manager. 
- */
+* Estrutura de dados necessárias para simular o Process Manager. 
+*/
 
 #ifndef process_manager_H
 #define process_manager_H
@@ -11,14 +11,22 @@
 // Utilização de short int para economia de memória.
 typedef short int sint; 
 
+// Estrutura com instrução e dados.
+typedef struct tadInst {
+    
+    char instrucao;
+    char *dados;
+} TadInst;
+
 // Esse tipo de dados tem a intenção de realizar a simulação da CPU física no programa.
 typedef struct processador {
     
-    sint ponteiroInst; // ponteiro para o array de instruções do programa.
+    sint pInst; // ponteiro para o array de instruções do programa.
     sint pc; // Contador atual do programa.
     int valorInteiro; // variável utilizada para realizar os calculos de simulação.
     sint tempoLimite; // conta o tempo limite que um programa tem para executar.
     sint tempoCorrente; // tempo variável (varia de 0 ao limite de tempo que tem um programa).
+    TadInst *vetorInst; // vetor com instruções do processo.
         
 }Cpu;
 
@@ -32,8 +40,7 @@ typedef struct processo {
     sint prioridade; // coeficiente prioridade do processo na fila de espera dos processo.
     sint tempoInicio; // falta especificar melhor.
     sint tempoAcumulado; // soma de todo tempo gasto pelo processo na CPU.
-    
-    /* Alterar para outro tipo de dado */char *intrucoes; // armazena as intruções do processo.
+    TadInst *vetorInst; // vetor com instruções do processo.
     
 } Processo;
 
@@ -47,5 +54,8 @@ typedef struct tadpm {
     Cpu *cpu; // estrutura que simula o processador físico.
     Processo *tabPcb; // tabela que armazena os processos e sua informaçoẽs
 } TadPm;
+
+// Iniciar a estrutura do process manager.
+TadPm *iniciaPM();
 
 #endif
