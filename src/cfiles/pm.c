@@ -13,11 +13,11 @@ Cpu *iniciaCpu(){
     temp->valorInteiro = 0;
     temp->tempoLimite = 0;
     temp->tempoCorrente = 0;
-    temp->*vetorInst = NULL;    
+    temp->vetorInst = NULL;    
     return temp;
 }
 
-Processo *iniciaProcesso(sint pid, sint pidPai, 
+Processo *criaProcesso(sint pid, sint pidPai, 
         sint prioridade, sint tempoInicio, TadInst *vInst){
     
     Processo *temp = malloc(sizeof(Processo));
@@ -35,6 +35,6 @@ TadPm *iniciaPM(){
     TadPm *temp = malloc(sizeof(TadPm));
     temp->tempoGeral = 0;    
     temp->pidExec = 0;
-    temp
+    temp->cpu = iniciaCpu();    
     return temp;
 }

@@ -7,13 +7,13 @@
 int main(int argc, char **argv){
     
     char *vInst;
-    sint size = leArquivo(argv[1], &vInst);
-    printf("size %d\n", size);
-    sint i;
-    for(i = 0; vInst[i] != '\0'; ++i){
+    sint size;
+    if((size = leArquivo(argv[1], &vInst)) == -1){
         
-        printf("%c\n", vInst[i]);
-    }
+        printf("Não foi possível abrir o arquivo.\n");
+        return 1;
+    }    
+    enviaComandos(vInst, size);
     return 0;
 }
 
