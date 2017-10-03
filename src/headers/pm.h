@@ -7,6 +7,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 // Utilização de short int para economia de memória.
 typedef short int sint; 
@@ -54,6 +57,16 @@ typedef struct tadpm {
     Cpu *cpu; // estrutura que simula o processador físico.
     Processo *tabPcb; // tabela que armazena os processos e sua informaçoẽs
 } TadPm;
+
+// Iniciar vetor de instruções
+TadInst *iniciaTad();
+
+// Inicia (retorna) cpu virtual.
+Cpu *iniciaCpu();
+
+// Retorna uma nova célula do Tipo processo com os dados preenchidos.
+Processo *criaProcesso(sint pid, sint pidPai, 
+        sint prioridade, sint tempoInicio, TadInst *vInst);
 
 // Iniciar a estrutura do process manager.
 TadPm *iniciaPM();
