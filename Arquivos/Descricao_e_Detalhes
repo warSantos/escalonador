@@ -134,7 +134,7 @@ Commander:
 	
 	Funções não funcionais.
 		
-		* Função criar teste (lista de comandos). 3 - 
+		* Função criar teste (lista de comandos). 2 - 
 
 	
 ProcessManager:
@@ -145,15 +145,15 @@ ProcessManager:
 		* Criar Processo na tabela. 3 - 
 		* Executa o processos. 1
 		* Escalonar processos. 1,2 - 
-		* Troca o contexto. 2 - 
-		* Troca de imagem. 2 - 
+		* Troca o contexto. 3 - 
+		* Troca de imagem. 3 - 
 		* Criar chaveamento Processo reporter. 3 - 	
 	
 	Funções não funcionais
 	
 		* Gerar resultados. 
 		* Controlador de relogio da CPU. 1 - 
-		* Função para criar teste (lista de processos). 3 -
+		* Função para criar teste (lista de processos). 2 -
 Reporter:
 	
-	* Impressão na tela. 1 - 
+	* Impressão na tela. 3 - 
