@@ -47,53 +47,55 @@ sint leArquivo(char *fileCmd, char **cmd){
         cont++;       
     }    
     cont++;    
-    *cmd = (char *) myrealloc(*cmd, (size_t)size, (size_t)cont, sizeof(char));    
+    *cmd = (char *) myrealloc(*cmd, (size_t)size, (size_t)cont, sizeof(char));        
     return cont;
 }
 
 sint enviaComandos(char *vInst, sint size){
     
     // Criando pipe de comunicação entre o process manager e commander.
-    int setPipe[2]; // Vetor com ids de leitura e escrita.
-    if(pipe(setPipe) < 0){
+    
+    int cp[2]; // Vetor com ids de leitura e escrita. Pipe commander -> manager
+    if(pipe(cp) < 0){
         
         printf("Falha ao criar pipe.\n");
         return -1;
     }
-    printf("pipes %d %d\n", setPipe[0], setPipe[1]);
-    // alterando vetor de int para vetor de char.
-    char *idPipeR = malloc(sizeof(char)*4);
-    char *idPipeW = malloc(sizeof(char)*4);    
-    memcpy(idPipeR, &setPipe[0], sizeof(int));
-    memcpy(idPipeW, &setPipe[1], sizeof(int));
+        
+    pid_t pidPM;    
+    char *argv[2];
+    argv[0] = "./pmanger";
+    argv[1] = NULL;
     
-    printf("atoi %d\n", atoi(idPipeW));
-    // Criando fork para o Processo manager...
-    pid_t pidPM;
     if((pidPM = fork()) == 0){
-        // Falta terminar a troca de imagem.
-        printf("Codigo do filho.\n");
-        if(execlp("./pmnger","./pmnger", (char *)NULL) < 0){
+        
+        // Falta terminar a troca de imagem.        
+        if(dup2(cp[0], 0) < -1){
+            
+            printf("Erro dup2 processo filho.\n");
+        }
+        if(execvp("./pmnger", argv) < 0){
             
             printf("Falha na troca de imagem.\n");
             return -1;
         }
-        
     }else if((pidPM = fork()) < 0){
                 
         printf("Falha ao criar fork para process manager...\n");
         return -1;
-    }else{
-        
-        printf("Codigo do pai.\n");
     }
     
-    /*
+    printf("pai\n");    
     sint idInst = 0;
+    if(dup2(cp[1], 1) < -1){
+            
+        printf("Erro dup2 processo filho.\n");    
+    }       
     while(idInst < size){ // Enquanto houver instruções...
-        
-        idInst++;
+                
+        write(1 , &vInst[idInst], sizeof(char));
+       // printf("> %c\", vInst[idInst]);
+        idInst++;    
     }
-    */
     return -1;
 }
