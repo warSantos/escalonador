@@ -73,7 +73,7 @@ sint enviaComandos(char *vInst, sint size){
             
             printf("Erro dup2 processo filho.\n");
             return -1;
-        }        
+        }         
         if(execvp("./pmnger", (char *)NULL) < 0){
             
             printf("Falha na troca de imagem.\n");
@@ -89,14 +89,19 @@ sint enviaComandos(char *vInst, sint size){
 
             printf("Erro dup2 processo filho.\n");
             return -1;
-        }        
+        } 
+             
         sint idInst = 0;
-        write(1, &vInst[idInst], 1);            
+        close(cp[0]);
         while (idInst < size) { // Enquanto houver instruções...
-
+            
+            sleep(1);            
             write(1, &vInst[idInst], 1);            
+            //printf(": %c\n", vInst[idInst]);            
             idInst++;            
-        }        
+        }  
+        close(cp[1]);        
+        exit(0);
     }
     return -1;
 }
