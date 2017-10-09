@@ -5,41 +5,49 @@ CC = gcc
 CFLAGS = -c -Wall -O3
 HDRS = src/headers/
 SRC = src/cfiles/
-	
+OBJ = ./obj/
+MKD = mkdir -p obj	
+
 # Comando de compilação dos três módulos.
 all:	cmder	pmnger	rpter
 
 # Compilação do commander.
 cmder:	cmd.o	commander.o 
-	$(CC) cmd.o commander.o -o cmder
+	$(CC) $(OBJ)cmd.o $(OBJ)commander.o -o cmder
 
-cmd.o:	$(SRC)cmd.c
-	$(CC) $(CFLAGS)	$(SRC)cmd.c
+cmd.o:	mk	$(SRC)cmd.c
+	$(CC) $(CFLAGS)	$(SRC)cmd.c -o $(OBJ)cmd.o
 	
-commander.o:	$(HDRS)commander.h	$(SRC)commander.c
-	$(CC) $(CFLAGS) $(SRC)commander.c
+commander.o: mk	$(HDRS)commander.h	$(SRC)commander.c
+	$(CC) $(CFLAGS) $(SRC)commander.c -o $(OBJ)commander.o
 	
 # Compilação do process manager
 pmnger:	pmanager.o	pm.o
-	$(CC) pmanager.o pm.o -o pmnger
+	$(CC) $(OBJ)pmanager.o $(OBJ)pm.o -o pmnger
 
-pmanager.o:	$(SRC)pmanager.c
-	$(CC) $(CFLAGS) $(SRC)pmanager.c
+pmanager.o:	mk	$(SRC)pmanager.c
+	$(CC) $(CFLAGS) $(SRC)pmanager.c -o $(OBJ)pmanager.o
 	
-pm.o:	$(HDRS)pm.h	$(SRC)pm.c
-	$(CC) $(CFLAGS) $(SRC)pm.c
+pm.o:	mk	$(HDRS)pm.h	$(SRC)pm.c
+	$(CC) $(CFLAGS) $(SRC)pm.c -o $(OBJ)pm.o
 
 # Compilção do reporter.
-rpter:	rporter.o	reporter.o
-	$(CC) rporter.o reporter.o -o rpter
+rpter:	mk	rporter.o	reporter.o
+	$(CC) $(OBJ)rporter.o $(OBJ)reporter.o -o rpter
 	
-rporter.o:	$(SRC)rporter.c
-	$(CC) $(CFLAGS) $(SRC)rporter.c
+rporter.o:	mk	$(SRC)rporter.c
+	$(CC) $(CFLAGS) $(SRC)rporter.c -o $(OBJ)rporter.o
 	
-reporter.o:	$(HDRS)reporter.h
-	$(CC) $(CFLAGS) $(SRC)reporter.c
+reporter.o:	mk	$(HDRS)reporter.h
+	$(CC) $(CFLAGS) $(SRC)reporter.c -o $(OBJ)reporter.o
 	
+mk:
+	$(MKD)
+
 # Limpar objetos de compilação
 
 clean:
-	rm -rf *.o
+	rm -rf $(OBJ)*.o
+
+del:
+	rm pmnger cmder rpter
