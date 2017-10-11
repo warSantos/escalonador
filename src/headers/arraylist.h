@@ -1,9 +1,7 @@
 #ifndef arraylist_H
 #define arraylist_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "utils.h"
 
 #define SIZE_INIT 1000 // Define um valor inicial para a quantida de células do arraylist.
 
@@ -14,18 +12,24 @@ typedef struct arraylist {
     int last; // mantem salvo a posição.        
     int sizeObj; // recebe o tamanho de uma celula. (serve de base para incremento e 
                 // decremento no ponteiro do array.       
-    int size;
-    short int *dirty; // defini se uma posição do array esta disponível.
+    int size; // quantidade de posisões alocadas no vetor.
+    int qtdeObj; // quantidade de objetos válidos no vetor.    
 }Arraylist;
 
+
+// Cria um novo arraylist genérico.
 Arraylist *newArray(short int sizeObj);
 
+// Altera a um objeto do array através do id.
+void changeObj(Arraylist *array, void *obj, int id);
+
+// Retorna o endereço de um objeto.
 void *getObj(Arraylist *array, int id);
 
+// Adiciona um objeto ao final do arraylist.
 void addObj(Arraylist *array, void *obj);
 
-void removeObj(Arraylist *array, int id);
-
+// cria um vetor novo e copia os dados do antigo para o novo.
 void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType);
 
 #endif

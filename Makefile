@@ -12,8 +12,8 @@ MKD = mkdir -p obj
 all:	cmder	pmnger	rpter
 
 # Compilação do commander.
-cmder:	cmd.o	commander.o 
-	$(CC) $(OBJ)cmd.o $(OBJ)commander.o -o cmder
+cmder:	cmd.o	commander.o	utils.o
+	$(CC) $(OBJ)cmd.o $(OBJ)commander.o $(OBJ)utils.o -o cmder
 
 cmd.o:	mk	$(SRC)cmd.c
 	$(CC) $(CFLAGS) $(SRC)cmd.c -o $(OBJ)cmd.o
@@ -22,19 +22,14 @@ commander.o: mk	$(HDRS)commander.h	$(SRC)commander.c
 	$(CC) $(CFLAGS) $(SRC)commander.c -o $(OBJ)commander.o
 	
 # Compilação do process manager
-pmnger:	pmanager.o	pm.o
-	$(CC) $(OBJ)pmanager.o $(OBJ)pm.o -o pmnger
+pmnger:	pmanager.o	pm.o	utils.o
+	$(CC) $(OBJ)pmanager.o $(OBJ)pm.o $(OBJ)arraylist.o $(OBJ)utils.o -o pmnger
 
 pmanager.o:	mk	$(SRC)pmanager.c
 	$(CC) $(CFLAGS) $(SRC)pmanager.c -o $(OBJ)pmanager.o
 	
 pm.o:	mk	arraylist.o	$(HDRS)pm.h	$(SRC)pm.c
-	$(CC) $(CFLAGS) $(OBJ)arraylist.o $(SRC)pm.c -o $(OBJ)pm.o
-
-# Compilação do do Arraylist
-
-arraylist.o:	mk	$(HDRS)arraylist.h	$(SRC)arraylist.c
-	$(CC) $(CFLAGS) $(SRC)arraylist.c -o $(OBJ)arraylist.o
+	$(CC) $(CFLAGS) $(SRC)pm.c -o $(OBJ)pm.o
 
 # Compilção do reporter.
 rpter:	mk	rporter.o	reporter.o
@@ -45,6 +40,16 @@ rporter.o:	mk	$(SRC)rporter.c
 	
 reporter.o:	mk	$(HDRS)reporter.h
 	$(CC) $(CFLAGS) $(SRC)reporter.c -o $(OBJ)reporter.o
+
+# Compilação do Arraylist
+
+arraylist.o:	mk	$(HDRS)arraylist.h	$(SRC)arraylist.c
+	$(CC) $(CFLAGS) $(SRC)arraylist.c -o $(OBJ)arraylist.o
+
+# Compilação do utils
+
+utils.o:	mk	$(HDRS)utils.h	$(SRC)utils.c
+	$(CC) $(CFLAGS) $(SRC)utils.c -o $(OBJ)utils.o
 	
 mk:
 	$(MKD)
