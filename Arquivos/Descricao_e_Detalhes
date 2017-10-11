@@ -128,9 +128,9 @@ Commander:
 
 	Funções funcionais.
 
-		* leArquivo. 3 -
-		* enviaComandos. 3 -
-		* Criar Processs Manager. 3 -
+		* leArquivo. 3 - pronto.
+		* enviaComandos. 3 - pronto (funcionalmente, mas falta verificar possibilidade de falha).
+		* Criar Processs Manager. 3 - pronto.
 	
 	Funções não funcionais.
 		
@@ -141,8 +141,10 @@ ProcessManager:
 	
 	Funções funcionais
 		
-		* Receber Comandos (process manager). 3 - 
-		* Criar Processo na tabela. 3 - 
+		* Receber Comandos (process manager). 3 - pronto.
+		* Criar Processo na tabela. 3 - fase de teste.
+			* Criar um estrutura (vetor, lista ou pilha para armazenar os processos).
+			* Criar uma forma de gerênciar essa estrutura dinamicamente e transparente).
 		* Executa o processos. 1
 		* Escalonar processos. 1,2 - 
 		* Troca o contexto. 3 - 

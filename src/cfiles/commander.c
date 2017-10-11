@@ -73,7 +73,8 @@ sint enviaComandos(char *vInst, sint size){
             
             printf("Erro dup2 processo filho.\n");
             return -1;
-        }         
+        }
+        // Troca de imagem (criando o process Manager).
         if(execvp("./pmnger", (char *)NULL) < 0){
             
             printf("Falha na troca de imagem.\n");

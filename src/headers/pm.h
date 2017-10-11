@@ -5,11 +5,11 @@
 #ifndef process_manager_H
 #define process_manager_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "arraylist.h"
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
+
 
 // Utilização de short int para economia de memória.
 typedef short int sint; 
@@ -55,7 +55,7 @@ typedef struct tadpm {
     sint *pidPronto; // vetor com pids de processos prontos para execução.
     sint *pidBloq; // vetor com pids de processos bloqueados.
     Cpu *cpu; // estrutura que simula o processador físico.
-    Processo *tabPcb; // tabela que armazena os processos e sua informaçoẽs
+    Arraylist *tabelaPcb; // vetor que armazena os processos e sua informaçoẽs
 } TadPm;
 
 // Iniciar vetor de instruções
@@ -65,7 +65,7 @@ TadInst *iniciaTad();
 Cpu *iniciaCpu();
 
 // Retorna uma nova célula do Tipo processo com os dados preenchidos.
-Processo *criaProcesso(sint pid, sint pidPai, 
+Processo *newProcesso(sint pid, sint pidPai, 
         sint prioridade, sint tempoInicio, TadInst *vInst);
 
 // Iniciar a estrutura do process manager.

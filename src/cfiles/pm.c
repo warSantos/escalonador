@@ -1,5 +1,6 @@
 #include "../headers/pm.h"
 
+
 TadInst *iniciaTad(){
     
     return malloc(sizeof(TadInst));
@@ -17,7 +18,7 @@ Cpu *iniciaCpu(){
     return temp;
 }
 
-Processo *criaProcesso(sint pid, sint pidPai, 
+Processo *newProcesso(sint pid, sint pidPai, 
         sint prioridade, sint tempoInicio, TadInst *vInst){
     
     Processo *temp = malloc(sizeof(Processo));
@@ -35,6 +36,8 @@ TadPm *iniciaPM(){
     TadPm *temp = malloc(sizeof(TadPm));
     temp->tempoGeral = 0;    
     temp->pidExec = 0;
-    temp->cpu = iniciaCpu();    
+    temp->cpu = iniciaCpu();  
+    temp->tabelaPcb = newArray(sizeof(Processo));
     return temp;
 }
+

@@ -16,7 +16,7 @@ cmder:	cmd.o	commander.o
 	$(CC) $(OBJ)cmd.o $(OBJ)commander.o -o cmder
 
 cmd.o:	mk	$(SRC)cmd.c
-	$(CC) $(CFLAGS)	$(SRC)cmd.c -o $(OBJ)cmd.o
+	$(CC) $(CFLAGS) $(SRC)cmd.c -o $(OBJ)cmd.o
 	
 commander.o: mk	$(HDRS)commander.h	$(SRC)commander.c
 	$(CC) $(CFLAGS) $(SRC)commander.c -o $(OBJ)commander.o
@@ -28,8 +28,13 @@ pmnger:	pmanager.o	pm.o
 pmanager.o:	mk	$(SRC)pmanager.c
 	$(CC) $(CFLAGS) $(SRC)pmanager.c -o $(OBJ)pmanager.o
 	
-pm.o:	mk	$(HDRS)pm.h	$(SRC)pm.c
-	$(CC) $(CFLAGS) $(SRC)pm.c -o $(OBJ)pm.o
+pm.o:	mk	arraylist.o	$(HDRS)pm.h	$(SRC)pm.c
+	$(CC) $(CFLAGS) $(OBJ)arraylist.o $(SRC)pm.c -o $(OBJ)pm.o
+
+# Compilação do do Arraylist
+
+arraylist.o:	mk	$(HDRS)arraylist.h	$(SRC)arraylist.c
+	$(CC) $(CFLAGS) $(SRC)arraylist.c -o $(OBJ)arraylist.o
 
 # Compilção do reporter.
 rpter:	mk	rporter.o	reporter.o
