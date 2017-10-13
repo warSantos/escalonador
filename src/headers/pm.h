@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#define TAM 15
+
 
 // Utilização de short int para economia de memória.
 typedef short int sint; 
@@ -17,8 +19,9 @@ typedef short int sint;
 // Estrutura com instrução e dados.
 typedef struct tadInst {
     
-    char instrucao;
-    char *dados;
+    char *instrucao; // vetor com as informações.
+    char **dados; // matriz de string para salvar nome de arquivos e valores de variávies.
+    sint size; // salva o tamanho do vetor.
 } TadInst;
 
 // Esse tipo de dados tem a intenção de realizar a simulação da CPU física no programa.
@@ -59,7 +62,10 @@ typedef struct tadpm {
 } TadPm;
 
 // Iniciar vetor de instruções
-TadInst *iniciaTad();
+TadInst *iniciaTad(sint size);
+
+// Copia as instruções de um vetor de instruções para outro
+void copiaInstrucao(TadInst *destino, TadInst *origem);
 
 // Inicia (retorna) cpu virtual.
 Cpu *iniciaCpu();
@@ -70,5 +76,8 @@ Processo *newProcesso(sint pid, sint pidPai,
 
 // Iniciar a estrutura do process manager.
 TadPm *iniciaPM();
+
+// Le as intruções do arquivo de um Processo e retorna um TadInst
+ TadInst *criaVetorInst(char *arquivo);
 
 #endif

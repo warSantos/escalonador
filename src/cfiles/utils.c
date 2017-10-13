@@ -6,19 +6,19 @@ void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType){
         
         return NULL;
     }
-    char *temp = (char *) vetor;        
+    char *temp = (char *) vetor;
     int i, endVet;
     if(newLen < len){
         
         endVet = sizeType * newLen;
     }else{
         
-        endVet = sizeType * len;        
+        endVet = sizeType * len;
     }
-    char *newVet = malloc(sizeType * newLen);        
+    char *newVet = malloc(sizeType * newLen);
     for(i = 0; i < endVet; ++i){
                  
-        newVet[i] = temp[i];                
+        newVet[i] = temp[i];
     }    
     free(temp);
     return (void *) newVet;

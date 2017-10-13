@@ -4,14 +4,14 @@
 #define ate printf("Ate aqui foi\n");
 
 sint leArquivo(char *fileCmd, char **cmd){
-    
+
     FILE *leitor = fopen(fileCmd, "r");
     if(leitor == NULL){
-                
+
         return -1;
     }    
     sint cont = 0, size = N;
-    *cmd = malloc(sizeof(char)*size);      
+    *cmd = malloc(sizeof(char)*size);
     while(fscanf(leitor, "%c\n", &(*cmd)[cont]) != EOF){
     
         if(cont == size - 2){ // hora de allocar mais memória para o vetor.

@@ -6,8 +6,8 @@ Arraylist *newArray(short int sizeObj){
     temp->sizeObj = sizeObj; // armazenando o tamamho de um Obj.
     temp->obj = malloc(SIZE_INIT * (sizeObj)); // atribuição do vetor de objetos
     temp->first = temp->obj; // inicializando o apontador para inicio da fila.                        
-    temp->last = 0;    
-    temp->size = SIZE_INIT; // quantidade inicial de memória alocada.    
+    temp->last = 0;
+    temp->size = SIZE_INIT; // quantidade inicial de memória alocada.        
     return temp;
 }
 
@@ -28,7 +28,7 @@ void addObj(Arraylist *array, void *obj){
         array->obj = myrealloc(array->obj, array->size, array->size + SIZE_INIT, array->sizeObj);        
         array->first = array->obj;
         array->size = array->size + SIZE_INIT;        
-    }        
+    }
     memcpy(array->obj + array->last, obj, array->sizeObj); // copiando o objeto para o array de objetos;            
     array->last += array->sizeObj;
     array->qtdeObj++;
