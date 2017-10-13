@@ -1,18 +1,31 @@
 #include "../headers/pm.h"
 
 
-TadInst *iniciaTad(sint size){
+TadInst *iniciaTadInst(sint size){
         
+    //printf("TAM: %d\n", size);
     TadInst *temp = malloc(sizeof(TadInst));
+    temp->instrucao = malloc(sizeof(char) * size);
     temp->dados = malloc(sizeof(char *) * size);    
     temp->size = size;
     return temp;
 }
 
+void impInst(TadInst *t){
+    
+    int i;
+    printf("Qtade de Instruções: %d\n\n", t->size);
+    for(i = 0; i < t->size; ++i){
+        
+        printf("I: %c, Dados: %s\n", t->instrucao[i], t->dados[i]);
+    }
+    printf("\n");
+}
+
 void copiaInstrucao(TadInst *destino, TadInst *origem){
     
     sint i;
-    destino->instrucao = malloc(sizeof(char) * strlen(origem->instrucao) + 1);
+    destino->instrucao = malloc(sizeof(char) * origem->size + 1);
     for(i = 0; i < origem->size; ++i){
         
         destino->instrucao[i] = origem->instrucao[i];        
@@ -20,14 +33,7 @@ void copiaInstrucao(TadInst *destino, TadInst *origem){
         strcpy(destino->dados[i], origem->dados[i]);
     }
 }
-/*
- int i;
-    for(i = 0; i < size; ++i){
-        
-        temp->dados[i] = malloc(sizeof(char)*15);
-    }
- * 
- */
+
 Cpu *iniciaCpu(){
     
     Cpu *temp = malloc(sizeof(Cpu));
@@ -41,7 +47,7 @@ Cpu *iniciaCpu(){
 }
 
 Processo *newProcesso(sint pid, sint pidPai,
-        sint prioridade, sint tempoInicio, TadInst *vInst){
+        sint prioridade, sint tempoInicio, char *arquivo){
 
     Processo *temp = malloc(sizeof(Processo));
     temp->pid = pid;
@@ -49,7 +55,7 @@ Processo *newProcesso(sint pid, sint pidPai,
     temp->prioridade = prioridade;
     temp->tempoInicio = tempoInicio;
     temp->tempoAcumulado = 0;
-    temp->vetorInst = vInst;
+    temp->vetorInst = criaVetorInst(arquivo);
     return temp;
 }
 
@@ -63,37 +69,56 @@ TadPm *iniciaPM(){
     return temp;
 }
 
- TadInst *criaVetorInst(char *arquivo){
+void showP(Processo *p){
+    
+    printf("\n\npid: %d\n", p->pid);
+    printf("pid do pai: %d\n", p->pidPai);
+    printf("instrucão atual: %d\n", p->pc);    
+    printf("variável: %d\n", p->valorInteiro);
+    printf("prioridade: %d\n", p->prioridade);
+    printf("tempo Inicial: %d\n", p->tempoInicio);
+    printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);    
+    impInst(p->vetorInst);
+}
+
+TadInst *criaVetorInst(char *arquivo) {
+    
     
     FILE *leitor = fopen(arquivo, "r");
-    if(leitor == NULL){
+    if (leitor == NULL) {
 
-        return (TadInst *)NULL;
-    }    
-    sint cont = 0, len;   
-    TadInst *vInst = iniciaTad(TAM), *temp = NULL;    
-    char buff[100];
-    while(fscanf(leitor, "%c %s\n",&vInst->instrucao[cont], buff) != EOF){
-        
+        return (TadInst *) NULL;
+    }
+    sint cont = 0, len;
+    TadInst *vInst = iniciaTadInst(TAM), *temp = NULL;
+    char buff[20];
+    while (fscanf(leitor, "%c %s\n", &vInst->instrucao[cont], buff) != EOF) {
+        //vInst->instrucao[cont]
         len = strlen(buff) + 1;
-        vInst->instrucao = malloc(sizeof(char) * len);
-        strcpy(vInst->dados[cont], buff);
-        if(cont == vInst->size - 2){ // hora de allocar mais memória para o vetor.
-                        
-            vInst->size *= 2; 
-            temp = iniciaTad(vInst->size);
-            copiaInstrucao(temp, vInst);                       
+        vInst->dados[cont] = malloc(sizeof (char) * len);               
+        strcpy(vInst->dados[cont], buff);        
+        
+        if (cont == vInst->size - 2) { // hora de allocar mais memória para o vetor.
+
+            vInst->size *= 2;
+            temp = iniciaTadInst(vInst->size);
+            copiaInstrucao(temp, vInst);
             free(vInst);
             vInst = temp;
             temp = NULL;
-        }                        
-        cont++;               
+        }
+        cont++;
+        
     }    
-    temp = iniciaTad(cont);
-    copiaInstrucao(temp, vInst);
+    vInst->size = cont;    
+    temp = iniciaTadInst(cont);
+    copiaInstrucao(temp, vInst);    
     free(vInst);
     vInst = temp;
     temp = NULL;
-    vInst->size = cont;
+    
+    
     return vInst;
 }
+ 
+ 

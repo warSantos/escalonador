@@ -10,8 +10,8 @@ int main()
 	FILE *pont_arq; 
 	
     printf("Digite quantidade de comandos \n");
-		scanf("%d", &linhas);
-	    linhas=linhas-1;
+    scanf("%d", &linhas);
+	linhas=linhas-1;
 	
 	pont_arq = fopen("procedimentos.txt", "w");
     

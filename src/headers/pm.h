@@ -61,8 +61,15 @@ typedef struct tadpm {
     Arraylist *tabelaPcb; // vetor que armazena os processos e sua informaçoẽs
 } TadPm;
 
+// Ponteiro global para estruturas utilizadas pelo process manager.
+TadPm *manager;
+
 // Iniciar vetor de instruções
-TadInst *iniciaTad(sint size);
+TadInst *iniciaTadInst(sint size);
+
+// Imprime as instruções e seus respectivos dados.
+// Informa a quantidade de instruções do processo.
+void impInst(TadInst *t);
 
 // Copia as instruções de um vetor de instruções para outro
 void copiaInstrucao(TadInst *destino, TadInst *origem);
@@ -72,10 +79,13 @@ Cpu *iniciaCpu();
 
 // Retorna uma nova célula do Tipo processo com os dados preenchidos.
 Processo *newProcesso(sint pid, sint pidPai, 
-        sint prioridade, sint tempoInicio, TadInst *vInst);
+        sint prioridade, sint tempoInicio, char *arquivo);
 
 // Iniciar a estrutura do process manager.
 TadPm *iniciaPM();
+
+// Imprimi a estrutura completa de um processo.
+void showP(Processo *p);
 
 // Le as intruções do arquivo de um Processo e retorna um TadInst
  TadInst *criaVetorInst(char *arquivo);

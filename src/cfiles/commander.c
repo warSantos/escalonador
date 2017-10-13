@@ -40,9 +40,9 @@ sint enviaComandos(char *vInst, sint size){
     int h;
     for(h = 0; h < size;++h){
         
-        printf("h: %d %c\n", h, vInst[h]);
+        //printf("h: %d %c\n", h, vInst[h]);
     }
-    pid_t pid;            
+    pid_t pid, fim;            
     if((pid = fork()) == 0){ // pid do processo filho.
                 
         if(dup2(cp[0], 0) < -1){
@@ -67,17 +67,21 @@ sint enviaComandos(char *vInst, sint size){
             printf("Erro dup2 processo filho.\n");
             return -1;
         } 
-             
+        ate     
         sint idInst = 0;
         close(cp[0]);
+        
         while (idInst < size) { // Enquanto houver instruções...
             
             sleep(1);            
             write(1, &vInst[idInst], 1);            
-            //printf(": %c\n", vInst[idInst]);            
+            printf(": %c\n", vInst[idInst]);            
             idInst++;            
         }  
-        close(cp[1]);        
+        close(cp[1]);   
+        //waitpid(fim, NULL, NULL);
+        fim = wait(pid);
+        
         exit(0);
     }
     return -1;
