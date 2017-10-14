@@ -73,15 +73,13 @@ sint enviaComandos(char *vInst, sint size){
         
         while (idInst < size) { // Enquanto houver instruções...
             
-            sleep(1);            
+          //  sleep(1);            
             write(1, &vInst[idInst], 1);            
             printf(": %c\n", vInst[idInst]);            
             idInst++;            
         }  
         close(cp[1]);   
-        //waitpid(fim, NULL, NULL);
-        fim = wait(pid);
-        
+       // fim = wait(fim);        
         exit(0);
     }
     return -1;

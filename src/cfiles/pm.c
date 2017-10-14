@@ -2,8 +2,7 @@
 
 
 TadInst *iniciaTadInst(sint size){
-        
-    //printf("TAM: %d\n", size);
+            
     TadInst *temp = malloc(sizeof(TadInst));
     temp->instrucao = malloc(sizeof(char) * size);
     temp->dados = malloc(sizeof(char *) * size);    
@@ -11,7 +10,7 @@ TadInst *iniciaTadInst(sint size){
     return temp;
 }
 
-void impInst(TadInst *t){
+void showInst(TadInst *t){
     
     int i;
     printf("Qtade de Instruções: %d\n\n", t->size);
@@ -25,13 +24,15 @@ void impInst(TadInst *t){
 void copiaInstrucao(TadInst *destino, TadInst *origem){
     
     sint i;
-    destino->instrucao = malloc(sizeof(char) * origem->size + 1);
+    //destino->instrucao = malloc(sizeof(char) * origem->size + 1);
     for(i = 0; i < origem->size; ++i){
-        
+                
         destino->instrucao[i] = origem->instrucao[i];        
+        //printf("I: %d\n", (int)i);
         destino->dados[i] = malloc(sizeof(char) * strlen(origem->dados[i]) + 1);
-        strcpy(destino->dados[i], origem->dados[i]);
+        strcpy(destino->dados[i], origem->dados[i]);        
     }
+    printf("I: %d\n", i);    
 }
 
 Cpu *iniciaCpu(){
@@ -78,7 +79,7 @@ void showP(Processo *p){
     printf("prioridade: %d\n", p->prioridade);
     printf("tempo Inicial: %d\n", p->tempoInicio);
     printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);    
-    impInst(p->vetorInst);
+    showInst(p->vetorInst);
 }
 
 TadInst *criaVetorInst(char *arquivo) {
@@ -90,35 +91,39 @@ TadInst *criaVetorInst(char *arquivo) {
         return (TadInst *) NULL;
     }
     sint cont = 0, len;
-    TadInst *vInst = iniciaTadInst(TAM), *temp = NULL;
+    TadInst *vInst = iniciaTadInst(TAM), *temp = NULL;   
     char buff[20];
     while (fscanf(leitor, "%c %s\n", &vInst->instrucao[cont], buff) != EOF) {
-        //vInst->instrucao[cont]
+        
         len = strlen(buff) + 1;
         vInst->dados[cont] = malloc(sizeof (char) * len);               
         strcpy(vInst->dados[cont], buff);        
         
-        if (cont == vInst->size - 2) { // hora de allocar mais memória para o vetor.
-
-            vInst->size *= 2;
-            temp = iniciaTadInst(vInst->size);
-            copiaInstrucao(temp, vInst);
+        if (cont == vInst->size - 1) { // hora de allocar mais memória para o vetor.
+                                       
+            temp = iniciaTadInst(vInst->size * 2);            
+            copiaInstrucao(temp, vInst);  
+            printf("Fim\n");
+            showInst(temp);
             free(vInst);
             vInst = temp;
             temp = NULL;
         }
         cont++;
         
-    }    
-    vInst->size = cont;    
+    }  
+    vInst->size = cont;  
     temp = iniciaTadInst(cont);
     copiaInstrucao(temp, vInst);    
     free(vInst);
     vInst = temp;
-    temp = NULL;
-    
-    
+    temp = NULL;  
     return vInst;
 }
  
- 
+ /*int k;
+            printf("cont: %d buff: %s\n", cont, buff);
+            for(k = 0; k < 15; ++k){
+                
+                printf("%d teste: %s\n", k, vInst->dados[k]);
+            }*/

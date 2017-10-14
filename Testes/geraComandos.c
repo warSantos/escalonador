@@ -10,18 +10,18 @@ int main()
 	FILE *pont_arq; 
 	
     printf("Digite quantidade de comandos \n");
-		scanf("%d", &linhas);
+    scanf("%d", &linhas);
+	linhas=linhas-1;
 	
-	pont_arq = fopen("procedimentos.txt", "w");
+	pont_arq = fopen("cmds.txt", "w");
     
     while(counter < linhas)
     {
-        randChar = "QUPT"[random () % 4];
+        randChar = "QUP"[random () % 3];
         fprintf(pont_arq, "%c\n", randChar);
         counter++;
     } 
-    
+    fprintf(pont_arq, "T\n");
     fclose(pont_arq);  
     return 0;
 }
- 

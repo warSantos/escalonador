@@ -69,7 +69,7 @@ TadInst *iniciaTadInst(sint size);
 
 // Imprime as instruções e seus respectivos dados.
 // Informa a quantidade de instruções do processo.
-void impInst(TadInst *t);
+void showInst(TadInst *t);
 
 // Copia as instruções de um vetor de instruções para outro
 void copiaInstrucao(TadInst *destino, TadInst *origem);

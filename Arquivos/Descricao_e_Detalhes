@@ -145,7 +145,7 @@ ProcessManager:
 		* Criar Processo na tabela. 3 - fase de teste.
 			* Criar um estrutura (vetor, lista ou pilha para armazenar os processos).
 			* Criar uma forma de gerênciar essa estrutura dinamicamente e transparente).
-		* Executa o processos. 1
+		* Executar os processos. 1
 		* Escalonar processos. 1,2 - 
 		* Troca o contexto. 3 - 
 		* Troca de imagem. 3 - 
