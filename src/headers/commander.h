@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 typedef short int sint;

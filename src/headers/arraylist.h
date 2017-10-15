@@ -27,7 +27,7 @@ void changeObj(Arraylist *array, void *obj, int id);
 void *getObj(Arraylist *array, int id);
 
 // Adiciona um objeto ao final do arraylist.
-void addObj(Arraylist *array, void *obj);
+short int addObj(Arraylist *array, void *obj);
 
 // cria um vetor novo e copia os dados do antigo para o novo.
 void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType);

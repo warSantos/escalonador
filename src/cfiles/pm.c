@@ -1,5 +1,5 @@
 #include "../headers/pm.h"
-
+#include <unistd.h>
 
 TadInst *iniciaTadInst(sint size){
             
@@ -126,7 +126,7 @@ void callReporter(){
         printf("Falha ao criar pipe.\n");
         return;
     }
-    pid_t pid, fim;
+    pid_t pid /*, fim*/;
     if((pid = fork()) == 0){ // pid do processo filho
         
         // alterando stdin do processo filho.
@@ -134,7 +134,7 @@ void callReporter(){
             
             return;
         }
-        if(execvp("./rpter", (char *NULL)) < 0){
+        if(execvp("./rpter", (char **) NULL) < 0){
             
             printf("Falha na troca de imagem.\n");
             return;
@@ -142,33 +142,65 @@ void callReporter(){
     }else if(pid < 0){
         
         printf("Falha ao criar fork para process manager...\n");
-        return -1;
+        return;
     }else{
         
         // alterando stdout do processo pai.
         if (dup2(pr[1], 1) < -1) {
 
             printf("Erro dup2 processo filho.\n");
-            return -1;
+            return;
         }
         close(pr[0]); // fechando pipe de leitura.                
+        // enviando tabela pcb pelo pipe.
         Processo *temp = getObj(manager->tabelaPcb, manager->pidExec);
         // Enviando o processo atual na CPU
-        sint size_sint = sizeof(sint);
+        sint size_sint = sizeof(sint), leg0 = 1, leg1 = 1;
         sint estado = 0; // bloqueado 2, executando 0, pronto 1.
-        write(1, temp->pid, size_sint);
-        write(1, temp->pidPai, size_sint);
-        write(1, temp->prioridade, size_sint);
-        write(1, manager->cpu->valorInteiro, sizeof(int));
-        write(1, temp->tempoAcumulado, size_sint);
+        write(1, &temp->pid, size_sint);
+        write(1, &temp->pidPai, size_sint);
+        write(1, &temp->prioridade, size_sint);
+        write(1, &manager->cpu->valorInteiro, sizeof(int));
+        write(1, &temp->tempoAcumulado, size_sint);
         write(1, &estado, size_sint);
+        write(1, &leg0, size_sint);
+        write(1, &leg1, size_sint);
         
-        /*
-        while(){ // enviando tabela pcb pelo pipe.
+        leg0 = 0;
+        leg1 = 2;
+        int i;
+        for(i = 0; i < manager->tabelaPcb->qtdeObj; ++i){ 
             
-            write(1, );
-        }*/
-        close(cp[1]);   
-        fim = wait(fim);                
+            if (manager->pidPronto[i]) {
+
+                temp = getObj(manager->tabelaPcb, i);
+                write(1, &temp->pid, size_sint);
+                write(1, &temp->pidPai, size_sint);
+                write(1, &temp->prioridade, size_sint);
+                write(1, &temp->valorInteiro, sizeof (int));
+                write(1, &temp->tempoAcumulado, size_sint);
+                write(1, &estado, size_sint);
+                write(1, &leg0, size_sint);
+                write(1, &leg1, size_sint);
+            }
+        }
+        leg1 = 3;
+        for(i = 0; i < manager->tabelaPcb->qtdeObj; ++i){ 
+            
+            if (manager->pidBloq[i]) {
+
+                temp = getObj(manager->tabelaPcb, i);
+                write(1, &temp->pid, size_sint);
+                write(1, &temp->pidPai, size_sint);
+                write(1, &temp->prioridade, size_sint);
+                write(1, &temp->valorInteiro, sizeof (int));
+                write(1, &temp->tempoAcumulado, size_sint);
+                write(1, &estado, size_sint);
+                write(1, &leg0, size_sint);
+                write(1, &leg1, size_sint);
+            }
+        }
+        close(pr[1]);   
+        //fim = wait(pid);                
     }
 }

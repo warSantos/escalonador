@@ -42,7 +42,7 @@ sint enviaComandos(char *vInst, sint size){
         
         //printf("h: %d %c\n", h, vInst[h]);
     }*/
-    pid_t pid, fim;            
+    pid_t pid /*, fim*/;            
     if((pid = fork()) == 0){ // pid do processo filho.
                 
         if(dup2(cp[0], 0) < -1){
@@ -51,7 +51,7 @@ sint enviaComandos(char *vInst, sint size){
             return -1;
         }
         // Troca de imagem (criando o process Manager).
-        if(execvp("./pmnger", (char *)NULL) < 0){
+        if(execvp("./pmnger", (char **)NULL) < 0){
             
             printf("Falha na troca de imagem.\n");
             return -1;
@@ -79,7 +79,7 @@ sint enviaComandos(char *vInst, sint size){
             idInst++;            
         }  
         close(cp[1]);   
-        fim = wait(fim);        
+        //fim = wait(pid);        
         exit(0);
     }
     return -1;

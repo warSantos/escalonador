@@ -16,6 +16,6 @@
  * legenda1 flag para indicar se precisa imprimer O tipo de estado.
 */
 
-void showTable(Processo *p, int estadosint legenda0, sint legenda1);
+void showTable(Processo *p, sint estados, sint legenda0, sint legenda1);
 
 #endif

@@ -22,15 +22,18 @@ void changeObj(Arraylist *array, void *obj, int id){
     memcpy(array->obj + (id * array->sizeObj), obj, array->sizeObj);
 }
 
-void addObj(Arraylist *array, void *obj){
-        
+short int addObj(Arraylist *array, void *obj){
+    
+    short int flag = 0;
     if((array->last / array->sizeObj) == array->size){// se o limite do vetor foi atingido.
                       
         array->obj = myrealloc(array->obj, array->size, array->size + SIZE_INIT, array->sizeObj);        
         array->first = array->obj;
         array->size = array->size + SIZE_INIT;        
+        flag = 0;
     }
     memcpy(array->obj + array->last, obj, array->sizeObj); // copiando o objeto para o array de objetos;            
     array->last += array->sizeObj;
     array->qtdeObj++;
+    return flag;
 }
