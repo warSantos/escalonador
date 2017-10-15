@@ -206,3 +206,34 @@ void callReporter(){
         //fim = wait(pid);                
     }
 }
+void Executaprocesso(Cpu *cpu){
+    sint tempo = 0;
+    cpu->tempoInicio = //nao faço ideia como fazer esta bosta;
+    while(cpu->pInst < cpu->size){
+        tempo++;
+        switch(cpu->vetorInst[cpu->pInst].instrucao){//saber qual função sera executada
+            case 'S'://valor inteiro é alterado
+                cpu->tempoCorrente= cpu->tempoCorrente + 1;
+                cpu->valorInteiro = atoi(&cpu->vetorInst[cpu->pInst].dados);
+                break;
+            case 'A'://soma o valor inteiro com a entrada
+                cpu->tempoCorrente= cpu->tempoCorrente + 1;
+                cpu->valorInteiro = cpu->valorInteiro + atoi(&cpu->vetorInst[cpu->pInst].dados);
+                break;
+            case 'D'://subtrai o valor inteiro com a entrada
+                cpu->tempoCorrente= cpu->tempoCorrente + 1;
+                cpu->valorInteiro = cpu->valorInteiro - atoi(&cpu->vetorInst[cpu->pInst].dados);
+                break;
+            case 'B'://bloqueia o processo voltando para o escalonador
+                cpu->tempoCorrente= cpu->tempoCorrente + 1;
+                return;
+            case 'E'://termina o processo simulado
+            case 'F'://cria processo filho
+                
+            case 'R'://abre um arquivo com nome passado e altera o valor inteiro para a primeira instrução do novo processo
+
+            default:
+                printf("este comando não existe\n");
+        }
+    }
+}
