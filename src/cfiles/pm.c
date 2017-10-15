@@ -155,13 +155,13 @@ void callReporter(){
         Processo *temp = getObj(manager->tabelaPcb, manager->pidExec);
         // Enviando o processo atual na CPU
         sint size_sint = sizeof(sint);
-        sint ebp = 0; // bloqueado 2, executando 0, pronto 1.
+        sint estado = 0; // bloqueado 2, executando 0, pronto 1.
         write(1, temp->pid, size_sint);
         write(1, temp->pidPai, size_sint);
         write(1, temp->prioridade, size_sint);
         write(1, manager->cpu->valorInteiro, sizeof(int));
         write(1, temp->tempoAcumulado, size_sint);
-        write(1, &ebp, size_sint);
+        write(1, &estado, size_sint);
         
         /*
         while(){ // enviando tabela pcb pelo pipe.

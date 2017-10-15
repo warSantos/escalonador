@@ -17,7 +17,7 @@ int main(){
         rerad(0, temp->valorInteiro, sizeof(int));
         rerad(0, temp->tempoAcumulado, size_sint);
         true = rerad(0, estado, size_sint);
-        // funcaoDeImpressao(temp, estado).
+        // showTable(temp, estado).
     }
     return 0;
 }
