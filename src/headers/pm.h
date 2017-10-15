@@ -90,5 +90,6 @@ void showP(Processo *p);
 
 // Le as intruções do arquivo de um Processo e retorna um TadInst
  TadInst *criaVetorInst(char *arquivo);
+void Executaprocesso(Cpu *cpu);
 
 #endif
