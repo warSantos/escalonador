@@ -7,7 +7,8 @@ Arraylist *newArray(short int sizeObj){
     temp->obj = malloc(SIZE_INIT * (sizeObj)); // atribuição do vetor de objetos
     temp->first = temp->obj; // inicializando o apontador para inicio da fila.                        
     temp->last = 0;
-    temp->size = SIZE_INIT; // quantidade inicial de memória alocada.        
+    temp->size = SIZE_INIT; // quantidade inicial de memória alocada.    
+    temp->qtdeObj = 0;
     return temp;
 }
 

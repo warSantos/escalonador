@@ -36,12 +36,12 @@ sint enviaComandos(char *vInst, sint size){
         printf("Falha ao criar pipe.\n");
         return -1;
     }
-        
+    /*    
     int h;
     for(h = 0; h < size;++h){
         
         //printf("h: %d %c\n", h, vInst[h]);
-    }
+    }*/
     pid_t pid, fim;            
     if((pid = fork()) == 0){ // pid do processo filho.
                 
@@ -73,13 +73,13 @@ sint enviaComandos(char *vInst, sint size){
         
         while (idInst < size) { // Enquanto houver instruções...
             
-          //  sleep(1);            
+            sleep(1);            
             write(1, &vInst[idInst], 1);            
             printf(": %c\n", vInst[idInst]);            
             idInst++;            
         }  
         close(cp[1]);   
-       // fim = wait(fim);        
+        fim = wait(fim);        
         exit(0);
     }
     return -1;

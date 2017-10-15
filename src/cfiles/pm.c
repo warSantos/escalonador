@@ -23,16 +23,13 @@ void showInst(TadInst *t){
 
 void copiaInstrucao(TadInst *destino, TadInst *origem){
     
-    sint i;
-    //destino->instrucao = malloc(sizeof(char) * origem->size + 1);
+    sint i;    
     for(i = 0; i < origem->size; ++i){
                 
-        destino->instrucao[i] = origem->instrucao[i];        
-        //printf("I: %d\n", (int)i);
+        destino->instrucao[i] = origem->instrucao[i];                
         destino->dados[i] = malloc(sizeof(char) * strlen(origem->dados[i]) + 1);
         strcpy(destino->dados[i], origem->dados[i]);        
-    }
-    printf("I: %d\n", i);    
+    }    
 }
 
 Cpu *iniciaCpu(){
@@ -120,10 +117,58 @@ TadInst *criaVetorInst(char *arquivo) {
     temp = NULL;  
     return vInst;
 }
- 
- /*int k;
-            printf("cont: %d buff: %s\n", cont, buff);
-            for(k = 0; k < 15; ++k){
-                
-                printf("%d teste: %s\n", k, vInst->dados[k]);
-            }*/
+
+void callReporter(){
+    
+    int pr[2];
+    if(pipe(pr)){
+        
+        printf("Falha ao criar pipe.\n");
+        return;
+    }
+    pid_t pid, fim;
+    if((pid = fork()) == 0){ // pid do processo filho
+        
+        // alterando stdin do processo filho.
+        if(dup2(pr[0], 0) < -1){
+            
+            return;
+        }
+        if(execvp("./rpter", (char *NULL)) < 0){
+            
+            printf("Falha na troca de imagem.\n");
+            return;
+        }
+    }else if(pid < 0){
+        
+        printf("Falha ao criar fork para process manager...\n");
+        return -1;
+    }else{
+        
+        // alterando stdout do processo pai.
+        if (dup2(pr[1], 1) < -1) {
+
+            printf("Erro dup2 processo filho.\n");
+            return -1;
+        }
+        close(pr[0]); // fechando pipe de leitura.                
+        Processo *temp = getObj(manager->tabelaPcb, manager->pidExec);
+        // Enviando o processo atual na CPU
+        sint size_sint = sizeof(sint);
+        sint ebp = 0; // bloqueado 2, executando 0, pronto 1.
+        write(1, temp->pid, size_sint);
+        write(1, temp->pidPai, size_sint);
+        write(1, temp->prioridade, size_sint);
+        write(1, manager->cpu->valorInteiro, sizeof(int));
+        write(1, temp->tempoAcumulado, size_sint);
+        write(1, &ebp, size_sint);
+        
+        /*
+        while(){ // enviando tabela pcb pelo pipe.
+            
+            write(1, );
+        }*/
+        close(cp[1]);   
+        fim = wait(fim);                
+    }
+}

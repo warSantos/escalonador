@@ -12,16 +12,7 @@ int main(int argc, char **argv){
         
         printf("Não foi possível abrir o arquivo.\n");
         return 1;
-    }  
-    //printf("size %d\n", size);
+    }    
     enviaComandos(vInst, size);
     return 0;
 }
-
-/*
- sint i;
-    for(i = 0;vInst[i] != '\0'; ++i){
-        
-        printf("%c\n", vInst[i]);
-    }
- */

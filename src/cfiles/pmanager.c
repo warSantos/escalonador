@@ -7,7 +7,9 @@
 #define L 5
 
 int main(){
-        
+    
+    // #### debug do arraylist e da função copiaProcesso. 1. ###
+    
     manager = iniciaPM();
     int j;
     Processo *temp;
@@ -30,6 +32,8 @@ int main(){
         printf("pmnger.c\n");
         showP(temp);
     }
+    
+    // ### Fim do código de debug ### 1.
     char inst;
     
     while(read(0, &inst, 1)){

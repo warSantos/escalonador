@@ -26,7 +26,7 @@ typedef struct tadInst {
 
 // Esse tipo de dados tem a intenção de realizar a simulação da CPU física no programa.
 typedef struct processador {
-    
+        
     sint pInst; // ponteiro para o array de instruções do programa.
     sint pc; // Contador atual do programa.
     int valorInteiro; // variável utilizada para realizar os calculos de simulação.
