@@ -26,6 +26,12 @@ void changeObj(Arraylist *array, void *obj, int id);
 // Retorna o endereço de um objeto.
 void *getObj(Arraylist *array, int id);
 
+// Retorna a quantidade de posições alocadas no vetor. 
+int getSize(Arraylist *array);
+
+// Retorna a quantidade de objetos inseridos.
+int getQtdObj(Arraylist *array);
+
 // Adiciona um objeto ao final do arraylist.
 short int addObj(Arraylist *array, void *obj);
 

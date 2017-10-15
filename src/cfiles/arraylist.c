@@ -17,6 +17,16 @@ void *getObj(Arraylist *array, int id){
     return array->obj + (id * array->sizeObj);
 }
 
+int getSize(Arraylist *array){
+    
+    return array->size;
+}
+
+int getQtdObj(Arraylist *array){
+        
+    return array->qtdeObj;
+}
+
 void changeObj(Arraylist *array, void *obj, int id){
     
     memcpy(array->obj + (id * array->sizeObj), obj, array->sizeObj);

@@ -62,8 +62,10 @@ TadPm *iniciaPM(){
     TadPm *temp = malloc(sizeof(TadPm));
     temp->tempoGeral = 0;    
     temp->pidExec = 0;
-    temp->cpu = iniciaCpu();  
+    temp->cpu = iniciaCpu();      
     temp->tabelaPcb = newArray(sizeof(Processo));
+    temp->pidPronto = calloc(sizeof(sint), getSize(tabelaPcb));
+    temp->pidBloq = calloc(sizeof(sint), getSize(tabelaPcb));
     return temp;
 }
 
