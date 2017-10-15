@@ -32,8 +32,8 @@ pm.o:	mk	arraylist.o	$(HDRS)pm.h	$(SRC)pm.c
 	$(CC) $(CFLAGS) $(SRC)pm.c -o $(OBJ)pm.o
 
 # Compilção do reporter.
-rpter:	mk	rporter.o	reporter.o
-	$(CC) $(OBJ)rporter.o $(OBJ)reporter.o -o rpter
+rpter:	mk  pm.o    rporter.o	reporter.o
+	$(CC) $(OBJ)pm.o $(OBJ)arraylist.o $(OBJ)utils.o $(OBJ)rporter.o $(OBJ)reporter.o -o rpter
 	
 rporter.o:	mk	$(SRC)rporter.c
 	$(CC) $(CFLAGS) $(SRC)rporter.c -o $(OBJ)rporter.o

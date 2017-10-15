@@ -45,7 +45,7 @@ typedef struct processo {
     sint pc; // ponteiro para array que contem as instruções do programa.
     int valorInteiro; // valor utilizado para gerar calculos de simulação do programa.
     sint prioridade; // coeficiente prioridade do processo na fila de espera dos processo.
-    sint tempoInicio; // falta especificar melhor.
+    sint tempoInicio; // falta especificar melhor. (colocaremos como a primeira entrada na cpu).
     sint tempoAcumulado; // soma de todo tempo gasto pelo processo na CPU.
     TadInst *vetorInst; // vetor com instruções do processo.
     
@@ -54,7 +54,7 @@ typedef struct processo {
 // Tipo de dado completo a para trabalhar o process manager.
 typedef struct tadpm {
     
-    sint tempoGeral;
+    sint tempoGeral; // tempo geral do sistema (quantidade de instruções dadas pelo commander).
     sint pidExec; // ponteiro (id) para o processo em execução.
     sint *pidPronto; // vetor com pids de processos prontos para execução.
     sint *pidBloq; // vetor com pids de processos bloqueados.
@@ -89,7 +89,21 @@ TadPm *iniciaPM();
 void showP(Processo *p);
 
 // Le as intruções do arquivo de um Processo e retorna um TadInst
- TadInst *criaVetorInst(char *arquivo);
-void Executaprocesso(Cpu *cpu);
+TadInst *criaVetorInst(char *arquivo);
+
+// Retira um processo da fila de bloqueados e move para o estado de pronto.
+void unblock(sint *bloq, sint *pronto,  int size);
+
+// Move um processo da cpu para fila de bloqueados.
+void block(sint *bloq, int pid);
+
+// Executa as instruções de um processo na CPU.
+void executaProcesso(Cpu *cpu);
+
+// Envia um processo via pipe.
+void sendP(Processo *p, sint leg0, sint leg1, sint leg2);
+
+// Cria um fork e troca a imagem do fork para o reporter.
+void callReporter();
 
 #endif

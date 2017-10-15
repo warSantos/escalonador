@@ -73,7 +73,7 @@ sint enviaComandos(char *vInst, sint size){
         
         while (idInst < size) { // Enquanto houver instruções...
             
-            sleep(1);            
+            //sleep(1);            
             write(1, &vInst[idInst], 1);            
             printf(": %c\n", vInst[idInst]);            
             idInst++;            

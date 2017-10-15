@@ -1,5 +1,11 @@
 #.gitignore
 nbproject
+debug
+cmder
+pmnger
+rpter
+obj
+teste
 
 # compiled files
 *.o

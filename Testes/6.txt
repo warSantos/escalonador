@@ -1,0 +1,27 @@
+F 1
+R 11.txt
+A 75
+F 1
+R 8.txt
+F 1
+R 11.txt
+A 979
+D 572
+F 1
+R 11.txt
+A 394
+A 727
+F 1
+R 10.txt
+A 737
+D 846
+D 87
+S 347
+F 1
+R 9.txt
+S 866
+F 1
+R 11.txt
+F 1
+R 11.txt
+E
