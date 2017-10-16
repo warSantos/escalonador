@@ -38,5 +38,6 @@ void showTable(Processo *p, int tempoAtual, sint legenda0, sint legenda1, sint l
             printf("%d\t%d\t%d\t\t%d\t%d\t\t%d\n", p->pid, p->pidPai, p->prioridade, p->valorInteiro, p->tempoInicio, p->tempoAcumulado);
         }
     }
+    printf("**************************************************************************************\n");
 
 }

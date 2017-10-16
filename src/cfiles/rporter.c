@@ -22,6 +22,8 @@ int main(){
         read(0, &leg2, size_sint);                                       
         //showP2(temp);
         cont++;
+        db
+        printf("temp %p\n", temp);
         // aqui vai a função showTable        
         showTable(temp, tG, leg0, leg1, leg2);
     }

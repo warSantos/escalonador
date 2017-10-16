@@ -167,16 +167,16 @@ void trocaContexto(sint pid, sint tempoAloc, sint interrupt){
     
     // removendo o processo da cpu e voltando ele para tabela
     Processo *p = getObj(manager->tabelaPcb, manager->pidExec);
-    retiraP(p, cpu);   
+    retiraP(p, manager->cpu);   
     if(interrupt){
         // verifica se o processo foi bloqueado por uma interrupção.
         manager->pidBloq[manager->pidExec] = 1;
-        manager->pibProntos[manager->pidExec] = 0;
+        manager->pidPronto[manager->pidExec] = 0;
     }
-    manager->pibProntos[manager->pidExec] = 1;    
+    manager->pidPronto[manager->pidExec] = 1;    
     // escalonando o proximo processo.
-    p = getObj(pid , manger->pidExec);
-    escalona(p, cpu, tempoAloc);
+    p = getObj(manager->tabelaPcb , pid);
+    escalona(p, manager->cpu, tempoAloc);
     manager->pidExec = pid;
 }
 
@@ -209,17 +209,17 @@ void executaProcesso(Cpu *cpu) {
             case 'F'://cria processo filho
                 break;  
             case 'R'://abre um arquivo com nome passado e altera o valor inteiro para a primeira instrução do novo processo                                
-                                
-                /*
-                for(id = 0; i < getSize(manager->tabelaPcb); ++id){
+                
+                id = 0;
+                while(manager->pidPronto[id] != -1 && id < getLast(manager->tabelaPcb)){
                     
-                    if((getObj(manager->tabelaPcb, id))->pid == -1){ // se existir alguma posição 
-                                                                     // vaga no vetor.
-                        break;
-                    }
+                    ++id;
                 }
-                */                                                                
-                fk = newProcesso(getLast(manager->tabelaPcb), temp->pid, 15, manager->tempoGeral,
+                if(id == getLast(manager->tabelaPcb) && manager->pidPronto[id] == -1){
+                    
+                    ++id;
+                }
+                fk = newProcesso(id, temp->pid, 15, manager->tempoGeral,
                         temp->vetorInst->dados[cpu->pc]);
                 //showP(fk);
                 
@@ -229,9 +229,9 @@ void executaProcesso(Cpu *cpu) {
                 if(addObj((void *) manager->tabelaPcb, (void *)fk)){ 
                                                     
                     manager->pidBloq = myrealloc(manager->pidBloq, bkp_size, getSize(manager->tabelaPcb), sizeof(sint));
-                    manager->pidProntos = (manager->pidProntos, bkp_size, getSize(manager->tabelaPcb), sizeof(sint));
+                    manager->pidPronto = myrealloc(manager->pidPronto, bkp_size, getSize(manager->tabelaPcb), sizeof(sint));
                 }                
-                manager->pidProntos[fk->pid] = 1;
+                manager->pidPronto[fk->pid] = 1;
                 break;
             default:
                 printf("este comando não existe\n");
@@ -256,34 +256,6 @@ void sendP(Processo *p, sint leg0, sint leg1, sint leg2){
     write(1, &leg1, size_sint);
     write(1, &leg2, size_sint);
 }
-/*
-// reporter debug
-
-void callReporter() {
-    
-    Processo *temp = getObj(manager->tabelaPcb, 0);
-    temp->valorInteiro = manager->cpu->valorInteiro;
-    sint leg0 = 1, leg1 = 1, leg2 = 1;
-
-    showP(temp);        
-    //sendP(temp, leg0, leg1, leg2);
-    leg0 = 0;
-    leg1 = 2;
-    leg2 = 1;
-    int i;
-
-    for (i = 0; i < 5; ++i) {
-
-        if (!manager->pidPronto[i]) {
-
-            temp = getObj(manager->tabelaPcb, i);
-            //sendP(temp, leg0, leg1, leg2);
-            showP(temp);        
-            leg2 = 0;
-        }
-    }    
-}
-*/
 
 void callReporter(){
     
@@ -335,7 +307,7 @@ void callReporter(){
         
         for(i = 0; i < 10/*getSize(manager->tabelaPcb)*/; ++i){ 
             
-            if (!manager->pidPronto[i]) {
+            if (manager->pidPronto[i]) {
 
                 temp = getObj(manager->tabelaPcb, i);                
                 sendP(temp, leg0, leg1, leg2);
@@ -348,7 +320,7 @@ void callReporter(){
         leg2 = 1;
         for(i = 0; i < 10/*getSize(manager->tabelaPcb)*/; ++i){ 
             
-            if (!manager->pidBloq[i]) {
+            if (manager->pidBloq[i]) {
 
                 temp = getObj(manager->tabelaPcb, i);
                 sendP(temp, leg0, leg1, leg2);
@@ -359,12 +331,11 @@ void callReporter(){
         
         close(pr[1]);   
         
-        fim = wait(&pid); 
-        
+        fim = wait(&pid);         
         if(fim < 0){
             
             printf("ERRO PROCESSO FILHO\n");
-        }
+        }        
     }   
 }
 
@@ -382,3 +353,32 @@ void showP2(Processo *p){
     showInst(p->vetorInst);*/
     fclose(e);
 }
+
+/*
+// reporter debug
+
+void callReporter() {
+    
+    Processo *temp = getObj(manager->tabelaPcb, 0);
+    temp->valorInteiro = manager->cpu->valorInteiro;
+    sint leg0 = 1, leg1 = 1, leg2 = 1;
+
+    showP(temp);        
+    //sendP(temp, leg0, leg1, leg2);
+    leg0 = 0;
+    leg1 = 2;
+    leg2 = 1;
+    int i;
+
+    for (i = 0; i < 5; ++i) {
+
+        if (!manager->pidPronto[i]) {
+
+            temp = getObj(manager->tabelaPcb, i);
+            //sendP(temp, leg0, leg1, leg2);
+            showP(temp);        
+            leg2 = 0;
+        }
+    }    
+}
+*/

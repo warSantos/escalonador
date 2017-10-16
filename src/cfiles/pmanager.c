@@ -20,7 +20,7 @@ int main(){
     // Menu de indentificação dos comandos vindos do commander.
     while(read(0, &inst, 1)){
         
-        printf("inst: %c %hu\n", inst, manager->tempoGeral);       
+        //printf("inst: %c %hu\n", inst, manager->tempoGeral);       
         
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
             
@@ -29,7 +29,7 @@ int main(){
             
             unblock(manager->pidBloq, manager->pidPronto, manager->pidExec);
         }else if(inst == 'P'){ // chama o reporter.
-            
+            db
             callReporter();            
         }else if(inst == 'T'){ // chama o reporter e encerra o programa.
             
