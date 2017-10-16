@@ -95,7 +95,16 @@ TadInst *criaVetorInst(char *arquivo);
 void unblock(sint *bloq, sint *pronto,  int size);
 
 // Move um processo da cpu para fila de bloqueados.
-void block(sint *bloq, int pid);
+void block(sint *bloq, sint pid);
+
+// copia dados de um processo da tabela para a cpu. 
+void escalona(Processo *p, Cpu *cpu, sint tempoAloc);
+
+// Retira o processo da cpu e atualiza ele na tabelaPcb.
+void retiraP(Processo *p, Cpu *cpu);
+
+// Realiza troca de contexto.
+void trocaContexto(sint pid, sint tempoAloc, sint interrupt);
 
 // Executa as instruções de um processo na CPU.
 void executaProcesso(Cpu *cpu);

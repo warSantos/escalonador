@@ -86,11 +86,11 @@ void showP(Processo *p){
     printf("\npid: %d\n", p->pid);
     printf("pid do pai: %d\n", p->pidPai);
     printf("instrucão atual: %d\n", p->pc);    
-   /* printf("variável: %d\n", p->valorInteiro);
+    printf("variável: %d\n", p->valorInteiro);
     printf("prioridade: %d\n", p->prioridade);
     printf("tempo Inicial: %d\n", p->tempoInicio);
     printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);    
-    showInst(p->vetorInst);*/
+    showInst(p->vetorInst);
 }
 
 TadInst *criaVetorInst(char *arquivo) {
@@ -98,7 +98,7 @@ TadInst *criaVetorInst(char *arquivo) {
     
     FILE *leitor = fopen(arquivo, "r");
     if (leitor == NULL) {
-
+        
         return (TadInst *) NULL;
     }
     sint cont = 0, len;
@@ -143,45 +143,103 @@ void unblock(sint *bloq, sint *pronto, int size){
     pronto[i] = 1; // movendo ele para fila de pronto.
 }
 
-void block(sint *bloq, int pid){
+void block(sint *bloq, sint pid){
     
     bloq[pid] = 1;
 }
 
+void escalona(Processo *p, Cpu *cpu, sint tempoAloc){
+        
+    cpu->pc = p->pc;
+    cpu->valorInteiro = p->valorInteiro;
+    cpu->tempoLimite = tempoAloc;
+    cpu->vetorInst = p->vetorInst;
+}
+
+void retiraP(Processo *p, Cpu *cpu){
+    
+    p->pc = cpu->pc;
+    p->valorInteiro = cpu->valorInteiro;
+    p->tempoAcumulado += cpu->tempoCorrente;
+}
+
+void trocaContexto(sint pid, sint tempoAloc, sint interrupt){
+    
+    // removendo o processo da cpu e voltando ele para tabela
+    Processo *p = getObj(manager->tabelaPcb, manager->pidExec);
+    retiraP(p, cpu);   
+    if(interrupt){
+        // verifica se o processo foi bloqueado por uma interrupção.
+        manager->pidBloq[manager->pidExec] = 1;
+        manager->pibProntos[manager->pidExec] = 0;
+    }
+    manager->pibProntos[manager->pidExec] = 1;    
+    // escalonando o proximo processo.
+    p = getObj(pid , manger->pidExec);
+    escalona(p, cpu, tempoAloc);
+    manager->pidExec = pid;
+}
+
 void executaProcesso(Cpu *cpu) {       
     
-    Processo *temp = getObj(manager->tabelaPcb, manager->pidExec);
-    int size = temp->vetorInst->size;
-    cpu->tempoCorrente++;
-    while (cpu->pInst < size){
+    Processo *temp = getObj(manager->tabelaPcb, manager->pidExec), *fk;    
+    sint id;
+    while (cpu->tempoCorrente < cpu->tempoLimite){
                
-        switch (cpu->vetorInst->instrucao[cpu->pInst]){//saber qual função sera executada
+        switch (cpu->vetorInst->instrucao[cpu->pc]){//saber qual função sera executada
             case 'S'://valor inteiro é alterado
                 
                 cpu->valorInteiro = atoi(cpu->vetorInst->dados[0]);
                 break;
             case 'A'://soma o valor inteiro com a entrada
                 
-                cpu->valorInteiro = cpu->valorInteiro + atoi(cpu->vetorInst->dados[0]);
+                cpu->valorInteiro += atoi(cpu->vetorInst->dados[0]);
                 break;
             case 'D'://subtrai o valor inteiro com a entrada
                 
-                cpu->valorInteiro = cpu->valorInteiro - atoi(cpu->vetorInst->dados[0]);
+                cpu->valorInteiro -= atoi(cpu->vetorInst->dados[0]);
                 break;
             case 'B'://bloqueia o processo voltando para o escalonador
-                
-                return;
+                // aqui tbm deve ser chamada a função de troca de contexto.
+                block(manager->pidBloq, manager->pidExec);
+                // chama função ou funções de heurística de escalonamento.
+                //trocaContexto( , , 1);
+                break;
             case 'E'://termina o processo simulado
             case 'F'://cria processo filho
-
-            case 'R'://abre um arquivo com nome passado e altera o valor inteiro para a primeira instrução do novo processo
-
+                break;  
+            case 'R'://abre um arquivo com nome passado e altera o valor inteiro para a primeira instrução do novo processo                                
+                                
+                /*
+                for(id = 0; i < getSize(manager->tabelaPcb); ++id){
+                    
+                    if((getObj(manager->tabelaPcb, id))->pid == -1){ // se existir alguma posição 
+                                                                     // vaga no vetor.
+                        break;
+                    }
+                }
+                */                                                                
+                fk = newProcesso(getLast(manager->tabelaPcb), temp->pid, 15, manager->tempoGeral,
+                        temp->vetorInst->dados[cpu->pc]);
+                //showP(fk);
+                
+                // se o vetor arraylist realizaou realocação 
+                // de memória retorno = 1.
+                int bkp_size = getSize(manager->tabelaPcb);
+                if(addObj((void *) manager->tabelaPcb, (void *)fk)){ 
+                                                    
+                    manager->pidBloq = myrealloc(manager->pidBloq, bkp_size, getSize(manager->tabelaPcb), sizeof(sint));
+                    manager->pidProntos = (manager->pidProntos, bkp_size, getSize(manager->tabelaPcb), sizeof(sint));
+                }                
+                manager->pidProntos[fk->pid] = 1;
+                break;
             default:
                 printf("este comando não existe\n");
-        }
-        
-        cpu->pInst++;
-    }
+        }        
+        cpu->pc++;
+        cpu->tempoCorrente++;
+    }    
+    cpu->pc = 0;// temporário, deve ser indicada com o escaonamento.
 }
 
 void sendP(Processo *p, sint leg0, sint leg1, sint leg2){
@@ -275,7 +333,7 @@ void callReporter(){
         leg2 = 1;
         int i;
         
-        for(i = 0; i < 5/*getSize(manager->tabelaPcb)*/; ++i){ 
+        for(i = 0; i < 10/*getSize(manager->tabelaPcb)*/; ++i){ 
             
             if (!manager->pidPronto[i]) {
 
@@ -288,7 +346,7 @@ void callReporter(){
         temp = NULL;
         leg1 = 3;
         leg2 = 1;
-        for(i = 0; i < 5/*getSize(manager->tabelaPcb)*/; ++i){ 
+        for(i = 0; i < 10/*getSize(manager->tabelaPcb)*/; ++i){ 
             
             if (!manager->pidBloq[i]) {
 

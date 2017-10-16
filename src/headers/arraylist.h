@@ -26,6 +26,9 @@ void changeObj(Arraylist *array, void *obj, int id);
 // Retorna o endereço de um objeto.
 void *getObj(Arraylist *array, int id);
 
+// retorna o id da ultima posição.
+int getLast(Arraylist *array);
+
 // Retorna a quantidade de posições alocadas no vetor. 
 int getSize(Arraylist *array);
 

@@ -20,9 +20,10 @@ int main(){
         read(0, &leg0, size_sint);
         read(0, &leg1, size_sint);
         read(0, &leg2, size_sint);                                       
-        showP2(temp);
+        //showP2(temp);
         cont++;
         // aqui vai a função showTable        
+        showTable(temp, tG, leg0, leg1, leg2);
     }
     
     //exit(0);

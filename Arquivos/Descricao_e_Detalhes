@@ -129,7 +129,7 @@ Commander:
 	Funções funcionais.
 
 		* leArquivo. 3 - pronto.
-		* enviaComandos. 3 - pronto (funcionalmente, mas falta verificar possibilidade de falha).
+		* enviaComandos. 3 - pronto.
 		* Criar Processs Manager. 3 - pronto.
 	
 	Funções não funcionais.
@@ -149,7 +149,7 @@ ProcessManager:
 		* Escalonar processos. 1,2 - 
 		* Troca o contexto. 3 - 
 		* Troca de imagem. 3 - 
-		* Criar chaveamento Processo reporter. 3 - (fase de implementação).
+		* Criar chaveamento Processo reporter. 3 - (Aparentemente pronto).
 	
 	Funções não funcionais
 	
@@ -158,4 +158,4 @@ ProcessManager:
 		* Função para criar teste (lista de processos). 2 - (3 - pronto).
 Reporter:
 	
-	* Impressão na tela. 1 - (fase de implementação).
+	* Impressão na tela. 1 - (aparentemente pronto).
