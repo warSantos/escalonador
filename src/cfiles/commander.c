@@ -1,7 +1,6 @@
 #include "../headers/commander.h"
 
 #define N 10000
-#define ate printf("Ate aqui foi\n");
 
 sint leArquivo(char *fileCmd, char **cmd){
 
@@ -66,8 +65,7 @@ sint enviaComandos(char *vInst, sint size){
 
             printf("Erro dup2 processo filho.\n");
             return -1;
-        } 
-        ate     
+        }              
         sint idInst = 0;
         close(cp[0]);
         
@@ -75,7 +73,6 @@ sint enviaComandos(char *vInst, sint size){
             
             //sleep(1);            
             write(1, &vInst[idInst], 1);            
-            printf(": %c\n", vInst[idInst]);            
             idInst++;            
         }  
         close(cp[1]);   

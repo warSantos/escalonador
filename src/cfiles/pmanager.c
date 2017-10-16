@@ -39,27 +39,26 @@ int main(){
     // Menu de indentificação dos comandos vindos do commander.
     while(read(0, &inst, 1)){
         
-        printf("inst: %c\n", inst);        
-         
+        printf("inst: %c %hu\n", inst, cont);       
+        
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
             
             executaProcesso(manager->cpu);
         }else if(inst == 'U'){ // Desbloqueia um processo bloqueado.
             
-            unblock(manager->pidBloq, manager->pidPronto, manager->pidPronto);
+            unblock(manager->pidBloq, manager->pidPronto, manager->pidExec);
         }else if(inst == 'P'){ // chama o reporter.
             
-            callReporter();
-            
+            callReporter();            
         }else if(inst == 'T'){ // chama o reporter e encerra o programa.
             
             callReporter();
             break;
         }else{
             
-            printf("Instrução: %c linha: %hu, ignorada!\n", inst , cont + 1);
-        }
-    }   
-    
+            //printf("Instrução: %c linha: %hu, ignorada!\n", inst , cont + 1);
+        }  
+        cont++;
+    }       
     return 0;
 }

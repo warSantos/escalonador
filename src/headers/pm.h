@@ -106,4 +106,12 @@ void sendP(Processo *p, sint leg0, sint leg1, sint leg2);
 // Cria um fork e troca a imagem do fork para o reporter.
 void callReporter();
 
+
+// Funções de/para debug
+
+void debug();
+#define db debug();
+
+void showP2(Processo *p);
+
 #endif

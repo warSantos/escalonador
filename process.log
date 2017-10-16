@@ -1,0 +1,66 @@
+
+pid: 0
+pid do pai: 1
+instrucão atual: 0
+prioridade: 20
+variável: 0
+
+pid: 0
+pid do pai: 1
+instrucão atual: 0
+prioridade: 20
+variável: 0
+
+pid: 1
+pid do pai: 2
+instrucão atual: 0
+prioridade: 19
+variável: 0
+
+pid: 2
+pid do pai: 3
+instrucão atual: 0
+prioridade: 18
+variável: 0
+
+pid: 3
+pid do pai: 4
+instrucão atual: 0
+prioridade: 17
+variável: 0
+
+pid: 4
+pid do pai: 5
+instrucão atual: 0
+prioridade: 16
+variável: 0
+
+pid: 0
+pid do pai: 1
+instrucão atual: 0
+prioridade: 20
+variável: 0
+
+pid: 1
+pid do pai: 2
+instrucão atual: 0
+prioridade: 19
+variável: 0
+
+pid: 2
+pid do pai: 3
+instrucão atual: 0
+prioridade: 18
+variável: 0
+
+pid: 3
+pid do pai: 4
+instrucão atual: 0
+prioridade: 17
+variável: 0
+
+pid: 4
+pid do pai: 5
+instrucão atual: 0
+prioridade: 16
+variável: 0

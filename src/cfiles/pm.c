@@ -1,6 +1,13 @@
 #include "../headers/pm.h"
 #include <unistd.h>
 
+void debug(){
+    
+    FILE *e = fopen("syslog.txt","a");
+    fprintf(e, "GET HERE!!!\n");
+    fclose(e);
+}
+
 TadInst *iniciaTadInst(sint size){
             
     TadInst *temp = malloc(sizeof(TadInst));
@@ -76,14 +83,14 @@ TadPm *iniciaPM(){
 
 void showP(Processo *p){
     
-    printf("\n\npid: %d\n", p->pid);
+    printf("\npid: %d\n", p->pid);
     printf("pid do pai: %d\n", p->pidPai);
     printf("instrucão atual: %d\n", p->pc);    
-    printf("variável: %d\n", p->valorInteiro);
+   /* printf("variável: %d\n", p->valorInteiro);
     printf("prioridade: %d\n", p->prioridade);
     printf("tempo Inicial: %d\n", p->tempoInicio);
     printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);    
-    showInst(p->vetorInst);
+    showInst(p->vetorInst);*/
 }
 
 TadInst *criaVetorInst(char *arquivo) {
@@ -191,6 +198,34 @@ void sendP(Processo *p, sint leg0, sint leg1, sint leg2){
     write(1, &leg1, size_sint);
     write(1, &leg2, size_sint);
 }
+/*
+// reporter debug
+
+void callReporter() {
+    
+    Processo *temp = getObj(manager->tabelaPcb, 0);
+    temp->valorInteiro = manager->cpu->valorInteiro;
+    sint leg0 = 1, leg1 = 1, leg2 = 1;
+
+    showP(temp);        
+    //sendP(temp, leg0, leg1, leg2);
+    leg0 = 0;
+    leg1 = 2;
+    leg2 = 1;
+    int i;
+
+    for (i = 0; i < 5; ++i) {
+
+        if (!manager->pidPronto[i]) {
+
+            temp = getObj(manager->tabelaPcb, i);
+            //sendP(temp, leg0, leg1, leg2);
+            showP(temp);        
+            leg2 = 0;
+        }
+    }    
+}
+*/
 
 void callReporter(){
     
@@ -201,7 +236,7 @@ void callReporter(){
         return;
     }
     pid_t pid, fim;
-    if((pid = fork()) == 0){ // pid do processo filho
+    if((pid = fork()) == 0){// pid do processo filho
         
         // alterando stdin do processo filho.
         if(dup2(pr[0], 0) < -1){
@@ -225,41 +260,67 @@ void callReporter(){
             printf("Erro dup2 processo filho.\n");
             return;
         }
-        close(pr[0]); // fechando pipe de leitura.                
+        close(pr[0]); // fechando pipe de leitura.
         // enviando tabela pcb pelo pipe.
-            // Enviando o processo atual na CPU        
+            // Enviando o processo atual na CPU                
         Processo *temp = getObj(manager->tabelaPcb, 0);                
-        temp->valorInteiro = manager->cpu->valorInteiro;
+        temp->valorInteiro = manager->cpu->valorInteiro;        
         sint leg0 = 1, leg1 = 1, leg2 = 1;     
         
         //showP(temp);        
-        sendP(temp, leg0, leg1, leg2);
-        
+        sendP(temp, leg0, leg1, leg2);    
+        temp = NULL;
         leg0 = 0;
         leg1 = 2;
         leg2 = 1;
         int i;
-        for(i = 0; i < manager->tabelaPcb->qtdeObj; ++i){ 
+        
+        for(i = 0; i < 5/*getSize(manager->tabelaPcb)*/; ++i){ 
             
-            if (manager->pidPronto[i]) {
+            if (!manager->pidPronto[i]) {
 
-                temp = getObj(manager->tabelaPcb, i);
+                temp = getObj(manager->tabelaPcb, i);                
                 sendP(temp, leg0, leg1, leg2);
+                //showP(temp);        
                 leg2 = 0;
-            }
+            }            
         }
+        temp = NULL;
         leg1 = 3;
         leg2 = 1;
-        for(i = 0; i < manager->tabelaPcb->qtdeObj; ++i){ 
+        for(i = 0; i < 5/*getSize(manager->tabelaPcb)*/; ++i){ 
             
-            if (manager->pidBloq[i]) {
+            if (!manager->pidBloq[i]) {
 
                 temp = getObj(manager->tabelaPcb, i);
                 sendP(temp, leg0, leg1, leg2);
                 leg2 = 0;
             }
         }
+        temp = NULL;
+        
         close(pr[1]);   
-        fim = wait(&pid);                     
+        
+        fim = wait(&pid); 
+        
+        if(fim < 0){
+            
+            printf("ERRO PROCESSO FILHO\n");
+        }
     }   
+}
+
+void showP2(Processo *p){
+    
+    FILE *e = fopen("process.log", "a");
+    
+    fprintf(e, "\npid: %d\n", p->pid);
+    fprintf(e, "pid do pai: %d\n", p->pidPai);
+    fprintf(e, "instrucão atual: %d\n", p->pc);        
+    fprintf(e, "prioridade: %d\n", p->prioridade);
+    fprintf(e, "variável: %d\n", p->valorInteiro);/*
+    printf("tempo Inicial: %d\n", p->tempoInicio);
+    printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);    
+    showInst(p->vetorInst);*/
+    fclose(e);
 }

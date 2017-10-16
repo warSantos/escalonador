@@ -6,6 +6,10 @@ pmnger
 rpter
 obj
 teste
+exe
 
 # compiled files
 *.o
+
+# teste files
+Testes/*.txt
