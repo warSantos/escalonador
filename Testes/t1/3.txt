@@ -1,0 +1,10 @@
+A 454
+F 1
+R Testes/5.txt
+F 1
+R Testes/4.txt
+S 718
+D 814
+A 335
+A 248
+E

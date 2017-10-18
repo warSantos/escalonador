@@ -64,6 +64,7 @@ typedef struct tadpm {
 
 // Ponteiro global para estruturas utilizadas pelo process manager.
 TadPm *manager;
+// manager->pidPtonto[i]
 
 // Iniciar vetor de instruções
 TadInst *iniciaTadInst(sint size);
@@ -122,5 +123,10 @@ void debug();
 #define db debug();
 
 void showP2(Processo *p);
+
+// Herísticas de escalonamento
+
+// Fila
+int fcfs();
 
 #endif

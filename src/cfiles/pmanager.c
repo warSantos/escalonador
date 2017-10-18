@@ -11,26 +11,40 @@ int main(){
     // Criando processo init.txt na tabela.
     manager = iniciaPM();
     Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, "Testes/init.txt");                
-    addObj(manager->tabelaPcb, (void *)temp);    
+    addObj(manager->tabelaPcb, (void *)temp);            
     
     // copiando processo init.txt para cpu.
-    escalona(getObj(manager->tabelaPcb, 0), manager->cpu, 5);
+    //escalona(getObj(manager->tabelaPcb, 0), manager->cpu, 5);
         
     char inst;
     // Menu de indentificação dos comandos vindos do commander.
     while(read(0, &inst, 1)){
         
-        //printf("inst: %c %hu\n", inst, manager->tempoGeral);       
+        int newPid = fcfs();        
+        printf("newPid: %d\n", newPid);
+        if(newPid == 2){
+            
+            showP(getObj(manager->tabelaPcb, newPid));
+        }
+        /*
+        int h;
+        for(h = 0; h < getLast(manager->tabelaPcb); ++h){
+            
+            printf("Pid: %d, Pronto: %d\n", h, manager->pidPronto[h]);
+        }*/
+        trocaContexto(newPid , 5, 0);        
+        printf("inst: %d %c\n", manager->tempoGeral, inst);       
         
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
             
             executaProcesso(manager->cpu);
+            
         }else if(inst == 'U'){ // Desbloqueia um processo bloqueado.
             
             unblock(manager->pidBloq, manager->pidPronto, manager->pidExec);
         }else if(inst == 'P'){ // chama o reporter.
-            db
-            callReporter();            
+                        
+            //callReporter();                 
         }else if(inst == 'T'){ // chama o reporter e encerra o programa.
             
             callReporter();
@@ -41,7 +55,7 @@ int main(){
         }
         // aqui entra a política de escalonamento.
         // se for hora de escalonar um processo
-            // então escalona.
+            // então escalona.        
         manager->tempoGeral++;
     }       
     return 0;

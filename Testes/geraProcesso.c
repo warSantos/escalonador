@@ -24,15 +24,20 @@ int main(){
 	    int l = linhas - random () % linhas;
         while(counter < l){
                         
-            randChar = "AFDFS"[random () % 5];
+            randChar = "ADS"[random () % 3];
             if(randChar == 'A' || randChar == 'D' || randChar == 'S'){
                 
                 va = random() % 1000;
                 fprintf(pont_arq, "%c %d\n", randChar, va);
             }else{
                 
-                fprintf(pont_arq, "%c 1\n", randChar);
-                fprintf(pont_arq, "R %d.txt\n", (qtdeP + 1 + (random() % (bkp - (qtdeP - 1)))));
+                
+                int m = (qtdeP + 1 + (random() % (bkp - (qtdeP - 1))));
+                if(m < bkp || (m == bkp && qtdeP < bkp)){
+                
+                    fprintf(pont_arq, "%c 1\n", randChar);
+                    fprintf(pont_arq, "R Testes/%d.txt\n", m);
+                }
             }
             counter++;
         }

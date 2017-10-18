@@ -1,0 +1,50 @@
+####### 0
+F 1
+R Testes/1.txt
+F 1
+R Testes/2.txt
+F 1
+R Testes/3.txt
+F 1
+R Testes/4.txt
+F 1
+R Testes/5.txt
+E
+
+####### 1
+S 784
+A 706
+A 123
+F 1
+R Testes/2.txt
+D 398
+S 352
+D 312
+F 1
+R Testes/3.txt
+E
+
+####### 2
+D 724
+E
+
+####### 3
+A 454
+F 1
+R Testes/5.txt
+F 1
+R Testes/4.txt
+S 718
+D 814
+A 335
+A 248
+E
+
+####### 4
+D 30
+E
+
+####### 5
+S 117
+D 566
+E

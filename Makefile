@@ -61,3 +61,7 @@ clean:
 
 del:
 	rm pmnger cmder rpter
+# Executar
+
+run:
+	rm -f syslog.txt process.log && make all && ./cmder teste && ls
