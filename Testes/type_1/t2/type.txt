@@ -1,0 +1,2 @@
+# Teste com chamadas de filhos.
+Testes sem bloqueio de processos e chamadas de reporter

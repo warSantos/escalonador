@@ -1,4 +1,16 @@
-####### 0
+B 976
+B 493
+A 99
+E
+S 201
+E
+D 10
+S 20
+E
+B 771
+A 20
+B 434
+E
 F 1
 R Testes/1.txt
 F 1
@@ -7,44 +19,5 @@ F 1
 R Testes/3.txt
 F 1
 R Testes/4.txt
-F 1
-R Testes/5.txt
 E
-
-####### 1
-S 784
-A 706
-A 123
-F 1
-R Testes/2.txt
-D 398
-S 352
-D 312
-F 1
-R Testes/3.txt
-E
-
-####### 2
-D 724
-E
-
-####### 3
-A 454
-F 1
-R Testes/5.txt
-F 1
-R Testes/4.txt
-S 718
-D 814
-A 335
-A 248
-E
-
-####### 4
-D 30
-E
-
-####### 5
-S 117
-D 566
-E
+Teste minimo, quantidade de processos menor que 4, processos com bloqueuio.

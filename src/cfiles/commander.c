@@ -21,8 +21,8 @@ sint leArquivo(char *fileCmd, char **cmd){
         }                        
         cont++;       
     }        
-    *cmd = (char *) myrealloc(*cmd, (size_t)size, (size_t)cont, sizeof(char));        
-    return cont;
+    *cmd = (char *) myrealloc(*cmd, (size_t)size, (size_t)cont, sizeof(char));            
+    return cont;    
 }
 
 sint enviaComandos(char *vInst, sint size){
@@ -67,11 +67,11 @@ sint enviaComandos(char *vInst, sint size){
             
             //sleep(1);            
             write(1, &vInst[idInst], 1);            
-            idInst++;            
-        }  
-        close(cp[1]);   
-        //fim = wait(&pid);        
-        exit(0);
-    }
+            idInst++;                           
+        }          
+        close(cp[1]);           
+        fim = wait(&pid);                        
+        exit(0);               
+    }    
     return -1;
 }

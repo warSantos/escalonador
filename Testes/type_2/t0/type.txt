@@ -1,0 +1,1 @@
+Teste minimo, quantidade de processos menor que 4, processos com bloqueuio.

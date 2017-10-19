@@ -1,0 +1,19 @@
+F 1
+R Testes/1.txt
+F 1
+R Testes/2.txt
+F 1
+R Testes/3.txt
+F 1
+R Testes/4.txt
+F 1
+R Testes/5.txt
+F 1
+R Testes/6.txt
+F 1
+R Testes/7.txt
+F 1
+R Testes/8.txt
+F 1
+R Testes/9.txt
+E

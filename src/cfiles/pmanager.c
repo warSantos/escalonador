@@ -11,79 +11,50 @@ int main(){
     // Criando processo init.txt na tabela.
     manager = iniciaPM();
     Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, "Testes/init.txt");                
-    addObj(manager->tabelaPcb, (void *)temp);            
-    
+    addObj(manager->tabelaPcb, (void *)temp);                
     // copiando processo init.txt para cpu.
     //escalona(getObj(manager->tabelaPcb, 0), manager->cpu, 5);
         
     char inst;
     // Menu de indentificação dos comandos vindos do commander.
-    while(read(0, &inst, 1)){
+    while(read(0, &inst, 1)){    
         
-        int newPid = fcfs();        
-        printf("newPid: %d\n", newPid);
-        if(newPid == 2){
-            
-            showP(getObj(manager->tabelaPcb, newPid));
+        int newPid = fcfs();                
+        if(newPid == -1){
+                        
+            printf("PM terminado.\n");   
+            printf("Sachetoo cd seu 1 milhão?\n");
+            exit(0);
         }
-        /*
-        int h;
-        for(h = 0; h < getLast(manager->tabelaPcb); ++h){
-            
-            printf("Pid: %d, Pronto: %d\n", h, manager->pidPronto[h]);
-        }*/
-        trocaContexto(newPid , 5, 0);        
-        printf("inst: %d %c\n", manager->tempoGeral, inst);       
         
+        trocaContexto(newPid , 2, 0);        
+        //printf("PROCESSO %d ESCALONADO.\n", newPid);
+        //printf("CONTADOR DE PROGRAMA %d.\n", ((Processo *)getObj(manager->tabelaPcb, newPid))->pc);
+        printf("*********** %d - %c ************\n", manager->tempoGeral, inst);
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
-            
-            executaProcesso(manager->cpu);
-            
+                        
+            executaProcesso(manager->cpu);            
         }else if(inst == 'U'){ // Desbloqueia um processo bloqueado.
             
-            unblock(manager->pidBloq, manager->pidPronto, manager->pidExec);
+            if(unblock(manager->pidBloq, manager->pidPronto, manager->pidExec) == -1){
+                
+                //printf("SEM PROCESSOS NA FILA DE BLOQUEADO.\n");
+            }
         }else if(inst == 'P'){ // chama o reporter.
                         
-            //callReporter();                 
+            callReporter();                 
         }else if(inst == 'T'){ // chama o reporter e encerra o programa.
             
             callReporter();
             break;
         }else{
             
-            //printf("Instrução: %c linha: %hu, ignorada!\n", inst , cont + 1);
+            printf("Instrução: %c linha: %hu, ignorada!\n", inst , manager->tempoGeral + 1);
         }
         // aqui entra a política de escalonamento.
         // se for hora de escalonar um processo
             // então escalona.        
-        manager->tempoGeral++;
+        manager->tempoGeral++; 
     }       
     return 0;
 }
-
-/*  DEBUG IMPORTANTE PARA ENVIO DE DADOS PELO PIPE.
- * // #### debug do arraylist e da função copiaProcesso. 1. ###
-    sint j;
-    Processo *temp;
-    
-    printf("\n");
-    char *arq = malloc(sizeof(char)*50);
-    
-    for(j = 0; j < L; ++j){
-        
-        sprintf(arq, "Testes/%d.txt", j + 1);
-        printf("%s\n", arq);
-        temp = newProcesso(j, j+1, 20 - j, manager->tempoGeral, arq);                
-        addObj((void *)manager->tabelaPcb, (void *)temp);
-        temp = NULL;
-        
-    }
-    
-    for(j = 0; j < L; ++j){
-        
-        temp = getObj(manager->tabelaPcb, j);                
-        //showP(temp);        
-    }
-    
-    // ### Fim do código de debug ### 1.
-    */

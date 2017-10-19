@@ -1,0 +1,2 @@
+# Teste curtos e sem ramificações de processos (sem processos criando novos processos).
+Testes sem bloqueio de processos e chamadas de reporter

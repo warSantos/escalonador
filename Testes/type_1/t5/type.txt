@@ -1,0 +1,2 @@
+# Teste médio grande com 25 processos limit de instruções de 50
+Testes sem bloqueio de processos e chamadas de reporter

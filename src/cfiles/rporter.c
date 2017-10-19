@@ -14,15 +14,14 @@ int main(){
         read(0, &temp->pid, size_sint);       
         read(0, &temp->pidPai, size_sint);
         read(0, &temp->prioridade, size_sint);
-        bool = read(0, &temp->valorInteiro, sizeof(int));                
+        read(0, &temp->valorInteiro, sizeof(int));                
         read(0, &temp->tempoInicio, size_sint);
         read(0, &temp->tempoAcumulado, size_sint);        
         read(0, &leg0, size_sint);
         read(0, &leg1, size_sint);
-        read(0, &leg2, size_sint);                                       
-        //showP2(temp);
+        read(0, &leg2, size_sint);                                               
         cont++;               
-        // aqui vai a função showTable        
+        
         showTable(temp, tG, leg0, leg1, leg2);
     }
     

@@ -1,0 +1,2 @@
+# Testes medios, sem ramificações, numero de instruções limitadas a 20 por processo.
+Testes sem bloqueio de processos e chamadas de reporter

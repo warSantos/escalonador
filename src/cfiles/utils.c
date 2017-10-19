@@ -24,3 +24,10 @@ void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType){
     return (void *) newVet;
 }
 
+
+void debug(){
+    
+    FILE *e = fopen("syslog.txt","a");
+    fprintf(e, "GET HERE!!!\n");
+    fclose(e);
+}

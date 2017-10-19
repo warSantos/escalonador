@@ -69,10 +69,6 @@ TadPm *manager;
 // Iniciar vetor de instruções
 TadInst *iniciaTadInst(sint size);
 
-// Imprime as instruções e seus respectivos dados.
-// Informa a quantidade de instruções do processo.
-void showInst(TadInst *t);
-
 // Copia as instruções de um vetor de instruções para outro
 void copiaInstrucao(TadInst *destino, TadInst *origem);
 
@@ -86,17 +82,14 @@ Processo *newProcesso(sint pid, sint pidPai,
 // Iniciar a estrutura do process manager.
 TadPm *iniciaPM();
 
-// Imprimi a estrutura completa de um processo.
-void showP(Processo *p);
-
 // Le as intruções do arquivo de um Processo e retorna um TadInst
 TadInst *criaVetorInst(char *arquivo);
 
 // Retira um processo da fila de bloqueados e move para o estado de pronto.
-void unblock(sint *bloq, sint *pronto,  int size);
+int unblock(sint *bloq, sint *pronto,  int size);
 
 // Move um processo da cpu para fila de bloqueados.
-void block(sint *bloq, sint pid);
+void block(sint *bloq, sint *pronto, sint pid);
 
 // copia dados de um processo da tabela para a cpu. 
 void escalona(Processo *p, Cpu *cpu, sint tempoAloc);
@@ -116,17 +109,29 @@ void sendP(Processo *p, sint leg0, sint leg1, sint leg2);
 // Cria um fork e troca a imagem do fork para o reporter.
 void callReporter();
 
-
-// Funções de/para debug
-
-void debug();
-#define db debug();
-
-void showP2(Processo *p);
-
 // Herísticas de escalonamento
+
+// Função de ultimo recurso.
+// Se todos os processos na fila de pronto terminar,
+// tenta desbloquear um processo ou retornar o processo na cpu
+// e em último caso -1.
+int retPBloq(sint size);
 
 // Fila
 int fcfs();
+
+// Funções de/para debug
+
+void showP2(Processo *p);
+
+void ptr(Processo *t);
+
+// Imprimi a estrutura completa de um processo.
+void showP(Processo *p);
+
+// Imprime as instruções e seus respectivos dados.
+// Informa a quantidade de instruções do processo.
+void showInst(TadInst *t);
+
 
 #endif
