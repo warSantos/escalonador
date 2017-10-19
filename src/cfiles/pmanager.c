@@ -22,8 +22,7 @@ int main(){
         int newPid = fcfs();                
         if(newPid == -1){
                         
-            printf("PM terminado.\n");   
-            printf("Sachetoo cd seu 1 milhão?\n");
+            printf("PM terminado.\n");               
             exit(0);
         }
         

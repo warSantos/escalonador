@@ -1,2 +1,11 @@
-S 201
+D 110
+F 1
+R Testes/4.txt
+S 593
+F 1
+R Testes/4.txt
+B 197
+F 1
+R Testes/3.txt
+S 532
 E

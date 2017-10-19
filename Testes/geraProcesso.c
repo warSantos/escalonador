@@ -24,12 +24,12 @@ int main(){
 	    int l = linhas - random () % linhas;
         while(counter < l){
                         
-            randChar = "ADBSB"[random () % 5];
+            randChar = "ADBSF"[random () % 5];
             if(randChar == 'A' || randChar == 'D' || randChar == 'S' || randChar == 'B'){
                 
                 va = random() % 1000;
                 fprintf(pont_arq, "%c %d\n", randChar, va);
-            }/*else{
+            }else{
                 
                 
                 int m = (qtdeP + 1 + (random() % (bkp - (qtdeP - 1))));
@@ -38,7 +38,7 @@ int main(){
                     fprintf(pont_arq, "%c 1\n", randChar);
                     fprintf(pont_arq, "R Testes/%d.txt\n", m);
                 }
-            }*/
+            }
             counter++;
         }        
         counter = 0;

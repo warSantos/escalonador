@@ -41,7 +41,6 @@ P
 Q
 Q
 Q
-Q
 P
 P
 P
