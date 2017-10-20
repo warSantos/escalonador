@@ -145,16 +145,6 @@ int priStatic(sint base);
 // Valor de alteração definido no parâmetro reajuste.
 int priDinamic(sint base, sint reajuste);
 
-//RoundRobin
-int rr(sint *posicao);
-
-//prioridade
-int prioridade();
-
-//dando as prioridades para os processos
-int prioridaderandom();
-int prioridadetamanho();
-
 // Funções de/para debug
 
 void showP2(Processo *p);
