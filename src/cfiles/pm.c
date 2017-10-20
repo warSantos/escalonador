@@ -41,8 +41,7 @@ Processo *newProcesso(sint pid, sint pidPai,
     Processo *temp = malloc(sizeof(Processo));
     temp->pid = pid;    
     manager->pidPronto[temp->pid] = 1;    
-    temp->pidPai = pidPai;
-    temp->prioridade = prioridade;
+    temp->pidPai = pidPai;    
     temp->tempoInicio = tempoInicio;
     temp->tempoAcumulado = 0;
     temp->vetorInst = criaVetorInst(arquivo);
@@ -51,6 +50,7 @@ Processo *newProcesso(sint pid, sint pidPai,
         printf("Arquivo %s de processo não encontrado.\n", arquivo);
         return NULL;
     }    
+    temp->prioridade = definePrioridade(temp);
     return temp;
 }
 
@@ -193,7 +193,7 @@ void executaProcesso(Cpu *cpu) {
                                 
                 manager->pidPronto[temp->pid] = -1;                
                 temp->pc = cpu->pc; // atualizando pc antes para evitar no escalonamento.
-                //printf("PROCESSO: %d TERMINADO.\n", temp->pid);
+                printf("PROCESSO: %d TERMINADO.\n", temp->pid);
                 //printf("CONTADOR DE PROGRAMA: %d.\n", cpu->pc);                                
                 cpu->tempoCorrente++;
                 return;
@@ -251,6 +251,17 @@ int retPBloq(sint size){
     return p->pid;
 }
 
+int compare(int p1, int p2){
+    
+    if(p1 > p2){
+        
+        return 1;
+    }else{
+        
+        return 0;
+    }
+}
+
 int fcfs(){
     
     int i;
@@ -267,6 +278,88 @@ int fcfs(){
     } // Se acabar os processos na fila de pronto 
       // tenta retornar um bloqueado ou manter o processo da cpu.
     return retPBloq(size);            
+}
+
+int roundRobin(sint posicao){
+        
+    Processo *p;
+    sint size = getLast(manager->tabelaPcb);
+    if(posicao == size - 1){
+        posicao = 0;
+    }   
+    for(;posicao < size ; posicao++){
+        
+        if(manager->pidPronto[posicao] == 1){
+            
+            p = getObj(manager->tabelaPcb, posicao);
+            return p->pid;
+        }
+    }
+    return retPBloq(size);   
+}
+
+int definePrioridade(Processo *p){
+    
+    return p->vetorInst->size;
+}
+
+int priStatic(sint base){
+    
+    int i, pid = -1;
+    Processo *p;
+    sint size = getLast(manager->tabelaPcb), temp = base;    
+    for(i = 0; i < size; ++i){
+        
+        if(manager->pidPronto[i] == 1){ 
+                                                        
+            p = getObj(manager->tabelaPcb, i);            
+            if(compare(p->prioridade, temp)){
+                
+                temp = p->prioridade;
+                pid = p->pid;
+            }            
+        }                
+    } 
+    if(pid > -1){
+        
+        return pid;
+    }
+    // Se acabar os processos na fila de pronto 
+    // tenta retornar um bloqueado ou manter o processo da cpu.
+    return retPBloq(size);            
+}
+
+int priDinamic(sint base, sint reajuste){
+    
+    int i, pid = -1;
+    Processo *p;
+    sint size = getLast(manager->tabelaPcb), temp = base;    
+    for(i = 0; i < size; ++i){
+        
+        if(manager->pidPronto[i] == 1){ 
+                                                        
+            p = getObj(manager->tabelaPcb, i);            
+            if(compare(p->prioridade, temp)){
+                
+                temp = p->prioridade;
+                pid = p->pid;
+            }            
+        }                
+    } 
+    if(pid > -1){ // reajustando a prioridade do processo pronto.
+        
+        p->prioridade += reajuste;
+        return pid;
+    }
+    // Se acabar os processos na fila de pronto 
+    // tenta retornar um bloqueado ou manter o processo da cpu.
+    if((pid = retPBloq(size)) > -1){ 
+                // reajusta a prioridade do processo desbloqueado.
+        
+        p = getObj(manager->tabelaPcb, pid);
+        p->prioridade += reajuste;
+    }            
+    return pid;
 }
 
 void sendP(Processo *p, sint leg0, sint leg1, sint leg2){

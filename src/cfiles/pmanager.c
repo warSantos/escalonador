@@ -5,21 +5,28 @@
 #include "../headers/pm.h"
 
 #define L 10
+#define PRIO_INIT 100
 
 int main(){        
     
     // Criando processo init.txt na tabela.
     manager = iniciaPM();
     Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, "Testes/init.txt");                
+    temp->prioridade = PRIO_INIT;
     addObj(manager->tabelaPcb, (void *)temp);                
     // copiando processo init.txt para cpu.
     //escalona(getObj(manager->tabelaPcb, 0), manager->cpu, 5);
         
-    char inst;
+    char inst;    
+    int newPid = 0;
     // Menu de indentificação dos comandos vindos do commander.
     while(read(0, &inst, 1)){    
         
-        int newPid = fcfs();                
+        //newPid = fcfs();                
+        //newPid = fcfs(newPid);                
+        //newPid = roundRobin(newPid);
+        //newPid = priStatic(0);
+        newPid = priDinamic(0, -2);
         if(newPid == -1){
                         
             printf("PM terminado.\n");               
@@ -27,8 +34,8 @@ int main(){
         }
         
         trocaContexto(newPid , 2, 0);        
-        //printf("PROCESSO %d ESCALONADO.\n", newPid);
-        //printf("CONTADOR DE PROGRAMA %d.\n", ((Processo *)getObj(manager->tabelaPcb, newPid))->pc);
+        printf("PROCESSO %d ESCALONADO.\n", newPid);
+        printf("CONTADOR DE PROGRAMA %d.\n", ((Processo *)getObj(manager->tabelaPcb, newPid))->pc);
         printf("*********** %d - %c ************\n", manager->tempoGeral, inst);
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
                         

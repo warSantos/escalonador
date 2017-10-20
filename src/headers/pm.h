@@ -117,8 +117,33 @@ void callReporter();
 // e em último caso -1.
 int retPBloq(sint size);
 
-// Fila
+// Função de comparação, retorna 1 se p1 > 2
+// e zero se p1 <= p2.
+int compare(int p1, int p2);
+
+// Fila, preferência pelo primeiro processo adicionado na tabela.
 int fcfs();
+
+// Fila circular.
+int roundRobin(sint posicao);
+
+// define uma regra para estabelecer a prioridade de um
+// processo, a principio e utilizado o tamanho do processo
+// como base para prioridade.
+int definePrioridade(Processo *p);
+
+// Escalonamento por prioridade estática,
+// (não existe ateração de prioridades).
+// Parâmetro base define o limite superior ou inferior
+// para inicio de cálculo.
+int priStatic(sint base);
+
+// Escalonamento por prioridade dinâmica,
+// (as prioiridades são alteradas ao longo da execução).
+// Parâmetro base define o limite superior ou inferior
+// para inicio de cálculo.
+// Valor de alteração definido no parâmetro reajuste.
+int priDinamic(sint base, sint reajuste);
 
 // Funções de/para debug
 
