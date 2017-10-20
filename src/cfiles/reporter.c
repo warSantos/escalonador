@@ -1,7 +1,7 @@
 #include "../headers/reporter.h"
 
 
-void showTable(Processo *p, int tempoAtual, sint legenda0, sint legenda1, sint legenda2){        
+void showTable(Processo *p, int tempoAtual, int legenda0, int legenda1, int legenda2){        
     
     if (legenda0) {
         

@@ -27,7 +27,7 @@ int leArquivo(char *fileCmd, char **cmd){
     return cont;        
 }
 
-sint enviaComandos(char *vInst, int size, char **init){
+int enviaComandos(char *vInst, int size, char **init){
     
     // Criando pipe de comunicação entre o process manager e commander.
     

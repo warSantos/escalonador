@@ -3,7 +3,7 @@
 
 /* ### FUNÇÕES PARA INICIARLIZAR, COPIAR E MANNIPULAR OS TIPOS DE DADOS. ###*/
 
-TadInst *iniciaTadInst(sint size){
+TadInst *iniciaTadInst(int size){
             
     TadInst *temp = malloc(sizeof(TadInst));
     temp->instrucao = malloc(sizeof(char) * size);
@@ -14,7 +14,7 @@ TadInst *iniciaTadInst(sint size){
 
 void copiaInstrucao(TadInst *destino, TadInst *origem){
     
-    sint i;    
+    int i;    
     for(i = 0; i < origem->size; ++i){
                 
         destino->instrucao[i] = origem->instrucao[i];                
@@ -35,8 +35,8 @@ Cpu *iniciaCpu(){
     return temp;
 }
 
-Processo *newProcesso(sint pid, sint pidPai,
-        sint prioridade, sint tempoInicio, char *arquivo){
+Processo *newProcesso(int pid, int pidPai,
+        int prioridade, int tempoInicio, char *arquivo){
 
     Processo *temp = malloc(sizeof(Processo));
     temp->pid = pid;    
@@ -61,8 +61,8 @@ TadPm *iniciaPM(){
     temp->pidExec = 0;
     temp->cpu = iniciaCpu();      
     temp->tabelaPcb = newArray(sizeof(Processo));    
-    temp->pidPronto = calloc(sizeof(sint), getSize(temp->tabelaPcb));
-    temp->pidBloq = calloc(sizeof(sint), getSize(temp->tabelaPcb));
+    temp->pidPronto = calloc(sizeof(int), getSize(temp->tabelaPcb));
+    temp->pidBloq = calloc(sizeof(int), getSize(temp->tabelaPcb));
     return temp;
 }
 
@@ -73,7 +73,7 @@ TadInst *criaVetorInst(char *arquivo) {
         
         return (TadInst *) NULL;
     }
-    sint cont = 0, len;
+    int cont = 0, len;
     TadInst *vInst = iniciaTadInst(TAM), *temp = NULL;   
     char buff[20];
     while (fscanf(leitor, "%c %s\n", &vInst->instrucao[cont], buff) != EOF) {
@@ -104,7 +104,7 @@ TadInst *criaVetorInst(char *arquivo) {
 
 /*### FUNÇÕES DE MANIPULAÇÃO DO PROCESSO. ###*/
 
-int unblock(sint *bloq, sint *pronto, int size){
+int unblock(int *bloq, int *pronto, int size){
     
     int i = 0;
     while(!bloq[i] && i < size){
@@ -120,13 +120,13 @@ int unblock(sint *bloq, sint *pronto, int size){
     return -1;
 }
 
-void block(sint *bloq, sint *pronto, sint pid){
+void block(int *bloq, int *pronto, int pid){
     
     bloq[pid] = 1;
     pronto[pid] = 0;
 }
 
-void escalona(Processo *p, Cpu *cpu, sint quantum){
+void escalona(Processo *p, Cpu *cpu, int quantum){
         
     cpu->pc = p->pc;
     cpu->valorInteiro = p->valorInteiro;
@@ -141,7 +141,7 @@ void retiraP(Processo *p, Cpu *cpu){
     p->tempoAcumulado += cpu->tempoCorrente;    
 }
 
-void trocaContexto(sint pid, sint quantum, sint interrupt){
+void trocaContexto(int pid, int quantum, int interrupt){
     
     // removendo o processo da cpu e voltando ele para tabela
     Processo *p = getObj(manager->tabelaPcb, manager->pidExec);
@@ -162,7 +162,7 @@ void trocaContexto(sint pid, sint quantum, sint interrupt){
 void executaProcesso(Cpu *cpu) {       
     
     Processo *temp = getObj(manager->tabelaPcb, manager->pidExec), *fk;    
-    sint id;
+    int id;
     cpu->tempoCorrente = 0;    
     while(cpu->tempoCorrente < cpu->tempoLimite && cpu->pc < temp->vetorInst->size){
                
@@ -207,8 +207,8 @@ void executaProcesso(Cpu *cpu) {
                     int bkp_size = getSize(manager->tabelaPcb);
                     if (addObj((void *) manager->tabelaPcb, (void *) fk)) {
 
-                        manager->pidBloq = myrealloc(manager->pidBloq, bkp_size, getSize(manager->tabelaPcb), sizeof (sint));
-                        manager->pidPronto = myrealloc(manager->pidPronto, bkp_size, getSize(manager->tabelaPcb), sizeof (sint));
+                        manager->pidBloq = myrealloc(manager->pidBloq, bkp_size, getSize(manager->tabelaPcb), sizeof (int));
+                        manager->pidPronto = myrealloc(manager->pidPronto, bkp_size, getSize(manager->tabelaPcb), sizeof (int));
                     }     
                 }                
                 break;
@@ -220,7 +220,7 @@ void executaProcesso(Cpu *cpu) {
     }            
 }
 
-int retPBloq(sint size){
+int retPBloq(int size){
     
     Processo *p;
     int i = unblock(manager->pidBloq, manager->pidPronto, size);
@@ -251,7 +251,7 @@ int fcfs(){
     
     int i;
     Processo *p;
-    sint size = getLast(manager->tabelaPcb);    
+    int size = getLast(manager->tabelaPcb);    
     for(i = 0; i < size; ++i){
         
         if(manager->pidPronto[i] == 1){ // se o processo estiver pronto.
@@ -264,10 +264,10 @@ int fcfs(){
     return retPBloq(size);            
 }
 
-int roundRobin(sint posicao){
+int roundRobin(int posicao){
         
     Processo *p;
-    sint size = getLast(manager->tabelaPcb);
+    int size = getLast(manager->tabelaPcb);
     if(posicao == size - 1){
         posicao = 0;
     }   
@@ -287,11 +287,11 @@ int definePrioridade(Processo *p){
     return p->vetorInst->size;
 }
 
-int priStatic(sint base){
+int priStatic(int base){
     
     int i, pid = -1;
     Processo *p;
-    sint size = getLast(manager->tabelaPcb), temp = base;    
+    int size = getLast(manager->tabelaPcb), temp = base;    
     for(i = 0; i < size; ++i){
         
         if(manager->pidPronto[i] == 1){ 
@@ -313,16 +313,16 @@ int priStatic(sint base){
     return retPBloq(size);            
 }
 /*
-void setPriori(Processo *p, sint v){
+void setPriori(Processo *p, int v){
     
     p->prioridade = p->prioridade + v;
 }
 */
-int priDinamic(sint base, sint reajuste){
+int priDinamic(int base, int reajuste){
     
     int i, pid = -1;
     Processo *p;
-    sint size = getLast(manager->tabelaPcb), temp = base;    
+    int size = getLast(manager->tabelaPcb), temp = base;    
     for(i = 0; i < size; ++i){
         
         if(manager->pidPronto[i] == 1){ 
@@ -365,19 +365,19 @@ int priDinamic(sint base, sint reajuste){
     return pid;
 }
 
-void sendP(Processo *p, sint leg0, sint leg1, sint leg2){
+void sendP(Processo *p, int leg0, int leg1, int leg2){
         
-    sint size_sint = sizeof(sint);    
-    write(1, &manager->tempoGeral, size_sint);
-    write(1, &p->pid, size_sint);
-    write(1, &p->pidPai, size_sint);
-    write(1, &p->prioridade, size_sint);
-    write(1, &p->valorInteiro, sizeof (int));
-    write(1, &p->tempoInicio, size_sint);
-    write(1, &p->tempoAcumulado, size_sint);
-    write(1, &leg0, size_sint);
-    write(1, &leg1, size_sint);
-    write(1, &leg2, size_sint);    
+    int size_int = sizeof(int);    
+    write(1, &manager->tempoGeral, size_int);
+    write(1, &p->pid, size_int);
+    write(1, &p->pidPai, size_int);
+    write(1, &p->prioridade, size_int);
+    write(1, &p->valorInteiro, size_int);
+    write(1, &p->tempoInicio, size_int);
+    write(1, &p->tempoAcumulado, size_int);
+    write(1, &leg0, size_int);
+    write(1, &leg1, size_int);
+    write(1, &leg2, size_int);    
 }
 
 void callReporter(){
@@ -421,7 +421,7 @@ void callReporter(){
             // Enviando o processo atual na CPU                
         Processo *temp = getObj(manager->tabelaPcb, manager->pidExec);                
         temp->valorInteiro = manager->cpu->valorInteiro;        
-        sint leg0 = 1, leg1 = 1, leg2 = 1;                     
+        int leg0 = 1, leg1 = 1, leg2 = 1;                     
         sendP(temp, leg0, leg1, leg2);    
         temp = NULL;
         leg0 = 0;
