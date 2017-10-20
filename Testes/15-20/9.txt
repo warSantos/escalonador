@@ -1,0 +1,19 @@
+F 1
+R Testes/15-20/14.txt
+D 115
+A 447
+F 1
+R Testes/15-20/13.txt
+B 862
+D 332
+S 694
+A 155
+D 161
+D 953
+D 539
+S 100
+F 1
+R Testes/15-20/15.txt
+F 1
+R Testes/15-20/14.txt
+E

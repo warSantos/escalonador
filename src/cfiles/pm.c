@@ -112,8 +112,7 @@ int unblock(sint *bloq, sint *pronto, int size){
         ++i;
     }
     if(i < size){
-        
-        printf("DESBLOQUEANDO PROCESSO: %d\n", i);
+                
         bloq[i] = 0; // desbloqueando o processo.
         pronto[i] = 1; // movendo ele para fila de pronto.
         return i;
@@ -170,8 +169,7 @@ void executaProcesso(Cpu *cpu) {
         switch (cpu->vetorInst->instrucao[cpu->pc]){//saber qual função sera executada
             case 'S'://valor inteiro é alterado
                 
-                cpu->valorInteiro = atoi(cpu->vetorInst->dados[cpu->pc]);
-                //printf("ATOI: %d\n", cpu->valorInteirox);
+                cpu->valorInteiro = atoi(cpu->vetorInst->dados[cpu->pc]);                
                 break;
             case 'A'://soma o valor inteiro com a entrada
                 
@@ -183,37 +181,27 @@ void executaProcesso(Cpu *cpu) {
                 break;
             case 'B'://bloqueia o processo voltando para o escalonador
                 // aqui tbm deve ser chamada a função de troca de contexto.
-                block(manager->pidBloq, manager->pidPronto, temp->pid);
-                //printf("PROCESSO %d BLOQUEADO.\n", temp->pid);
-                //printf("CONTADOR DE PROGRAMA %d.\n", cpu->pc);
+                block(manager->pidBloq, manager->pidPronto, temp->pid);                
                 cpu->pc++;
                 cpu->tempoCorrente++;
                 return;
             case 'E'://termina o processo simulado
                                 
                 manager->pidPronto[temp->pid] = -1;                
-                temp->pc = cpu->pc; // atualizando pc antes para evitar no escalonamento.
-                printf("PROCESSO: %d TERMINADO.\n", temp->pid);
-                //printf("CONTADOR DE PROGRAMA: %d.\n", cpu->pc);                                
+                temp->pc = cpu->pc; // atualizando pc antes para evitar no escalonamento.                
                 cpu->tempoCorrente++;
                 return;
             case 'F'://cria processo filho
                 break;  
             case 'R'://abre um arquivo com nome passado e altera o valor inteiro para a primeira instrução do novo processo                                
-                
-                /*
-                id = 0;
-                while(manager->pidPronto[id] != -1 && id < getLast(manager->tabelaPcb)){
-                    
-                    ++id;
-                } */
+                                
                 id = getLast(manager->tabelaPcb);
                 fk = newProcesso(id, temp->pid, 15, manager->tempoGeral,
-                        temp->vetorInst->dados[cpu->pc]);
-                manager->tabelaPcb[temp->pid].prioridade = prioridadetamanho();
-                if(id < getLast(manager->tabelaPcb)){
+                        temp->vetorInst->dados[cpu->pc]);                
                 
-                    changeObj(manager->tabelaPcb, (void *)fk, id);
+                if(id < getSize(manager->tabelaPcb)){
+                
+                    addObj(manager->tabelaPcb, fk);
                 }else{
                     
                     int bkp_size = getSize(manager->tabelaPcb);
@@ -222,8 +210,7 @@ void executaProcesso(Cpu *cpu) {
                         manager->pidBloq = myrealloc(manager->pidBloq, bkp_size, getSize(manager->tabelaPcb), sizeof (sint));
                         manager->pidPronto = myrealloc(manager->pidPronto, bkp_size, getSize(manager->tabelaPcb), sizeof (sint));
                     }     
-                }
-                manager->pidPronto[fk->pid] = 1;
+                }                
                 break;
             default:
                 printf("Comando inválido %c.\n", cpu->vetorInst->instrucao[cpu->pc]);
@@ -238,9 +225,7 @@ int retPBloq(sint size){
     Processo *p;
     int i = unblock(manager->pidBloq, manager->pidPronto, size);
     if(i > -1){
-        
-        //printf("*** Não há mais processos na fila de pronto. ***\n");
-        //printf("*** Desbloquiando processo PID: %d. ***\n", i);
+                
         return i;
     }
     p = getObj(manager->tabelaPcb, manager->pidExec);
@@ -271,8 +256,7 @@ int fcfs(){
         
         if(manager->pidPronto[i] == 1){ // se o processo estiver pronto.
                         
-            p = getObj(manager->tabelaPcb, i);            
-            //printf("PROCESSO %d ESCALONADO.\n", p->pid);            
+            p = getObj(manager->tabelaPcb, i);                        
             return p->pid;
         }
     } // Se acabar os processos na fila de pronto 
@@ -328,7 +312,12 @@ int priStatic(sint base){
     // tenta retornar um bloqueado ou manter o processo da cpu.
     return retPBloq(size);            
 }
-
+/*
+void setPriori(Processo *p, sint v){
+    
+    p->prioridade = p->prioridade + v;
+}
+*/
 int priDinamic(sint base, sint reajuste){
     
     int i, pid = -1;
@@ -346,9 +335,16 @@ int priDinamic(sint base, sint reajuste){
             }            
         }                
     } 
+    
     if(pid > -1){ // reajustando a prioridade do processo pronto.
         
-        p->prioridade += reajuste;
+        if(p->pc > 0 
+                && p->vetorInst->instrucao[p->pc] == 'B'){
+            
+            p->prioridade--;
+        }else{
+            p->prioridade += reajuste;
+        }
         return pid;
     }
     // Se acabar os processos na fila de pronto 
@@ -356,8 +352,15 @@ int priDinamic(sint base, sint reajuste){
     if((pid = retPBloq(size)) > -1){ 
                 // reajusta a prioridade do processo desbloqueado.
         
-        p = getObj(manager->tabelaPcb, pid);
-        p->prioridade += reajuste;
+        p = getObj(manager->tabelaPcb, pid);        
+        
+        if(p->pc > 0
+                && p->vetorInst->instrucao[p->pc] == 'B'){
+            
+            p->prioridade--;
+        }else{
+            p->prioridade += reajuste;
+        }
     }            
     return pid;
 }
@@ -374,8 +377,7 @@ void sendP(Processo *p, sint leg0, sint leg1, sint leg2){
     write(1, &p->tempoAcumulado, size_sint);
     write(1, &leg0, size_sint);
     write(1, &leg1, size_sint);
-    write(1, &leg2, size_sint);
-    ptr(p);    
+    write(1, &leg2, size_sint);    
 }
 
 void callReporter(){
@@ -419,9 +421,7 @@ void callReporter(){
             // Enviando o processo atual na CPU                
         Processo *temp = getObj(manager->tabelaPcb, manager->pidExec);                
         temp->valorInteiro = manager->cpu->valorInteiro;        
-        sint leg0 = 1, leg1 = 1, leg2 = 1;     
-        
-        //showP(temp);        
+        sint leg0 = 1, leg1 = 1, leg2 = 1;                     
         sendP(temp, leg0, leg1, leg2);    
         temp = NULL;
         leg0 = 0;
@@ -448,8 +448,7 @@ void callReporter(){
             if (manager->pidPronto[i] == 1) {
 
                 temp = getObj(manager->tabelaPcb, i);
-                sendP(temp, leg0, leg1, leg2);
-                //showP2(temp);
+                sendP(temp, leg0, leg1, leg2);                
                 leg2 = 0;
             }
         }        
@@ -477,39 +476,4 @@ void showInst(TadInst *t){
         printf("I: %c, Dados: %s\n", t->instrucao[i], t->dados[i]);
     }
     printf("\n");
-}
-
-void showP(Processo *p){
-    
-    
-    printf("\npid: %d\n", p->pid);
-    printf("pid do pai: %d\n", p->pidPai);
-    printf("instrucão atual: %d\n", p->pc);        /*
-    printf("variável: %d\n", p->valorInteiro);
-    printf("prioridade: %d\n", p->prioridade);
-    printf("tempo Inicial: %d\n", p->tempoInicio);
-    printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);*/
-    showInst(p->vetorInst);
-}
-
-void showP2(Processo *p){
-    
-    FILE *e = fopen("process.log", "a");
-    
-    fprintf(e, "\npid: %d\n", p->pid);
-    //fprintf(e, "pid do pai: %d\n", p->pidPai);
-    fprintf(e, "instrucão atual: %d\n", p->pc);   /*     
-    fprintf(e, "prioridade: %d\n", p->prioridade);
-    fprintf(e, "variável: %d\n", p->valorInteiro);
-    printf("tempo Inicial: %d\n", p->tempoInicio);
-    printf("tempo Acumulado: %d\n\n", p->tempoAcumulado);    
-    showInst(p->vetorInst);*/
-    fclose(e);
-}
-
-void ptr(Processo *t){
-    
-    FILE *p = fopen("ptr.txt","a");
-    fprintf(p, "%p\n", t);
-    fclose(p);
 }

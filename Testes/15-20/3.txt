@@ -1,0 +1,21 @@
+S 641
+A 852
+B 41
+S 882
+D 168
+F 1
+R Testes/15-20/7.txt
+F 1
+R Testes/15-20/5.txt
+F 1
+R Testes/15-20/5.txt
+B 120
+S 97
+S 451
+S 498
+F 1
+R Testes/15-20/7.txt
+D 896
+D 402
+D 154
+E

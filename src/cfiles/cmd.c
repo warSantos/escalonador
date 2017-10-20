@@ -7,12 +7,12 @@
 int main(int argc, char **argv){
     
     char *vInst;
-    sint size;
+    int size;
     if((size = leArquivo(argv[1], &vInst)) == -1){
         
         printf("Não foi possível abrir o arquivo.\n");
         return 1;
     }    
-    enviaComandos(vInst, size);
+    enviaComandos(vInst, size, argv);
     return 0;
 }

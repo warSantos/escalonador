@@ -23,8 +23,6 @@ int main(){
         cont++;               
         
         showTable(temp, tG, leg0, leg1, leg2);
-    }
-    
-    //exit(0);
+    }        
     return 0;
 }

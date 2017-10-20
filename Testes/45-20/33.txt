@@ -1,0 +1,20 @@
+S 794
+S 846
+B 141
+D 845
+A 149
+S 371
+A 940
+F 1
+R Testes/45-20/36.txt
+F 1
+R Testes/45-20/43.txt
+D 912
+D 794
+B 710
+F 1
+R Testes/45-20/44.txt
+A 603
+D 744
+A 579
+E

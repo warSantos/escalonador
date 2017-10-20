@@ -1,0 +1,27 @@
+F 1
+R Testes/90-45/60.txt
+S 810
+F 1
+R Testes/90-45/49.txt
+A 433
+A 25
+B 293
+S 526
+F 1
+R Testes/90-45/85.txt
+B 850
+A 267
+B 514
+F 1
+R Testes/90-45/8.txt
+S 487
+B 281
+B 675
+S 13
+B 648
+A 846
+S 765
+B 493
+D 946
+S 39
+E

@@ -1,0 +1,25 @@
+A 561
+S 889
+S 50
+B 320
+A 670
+D 23
+S 140
+A 848
+B 55
+A 174
+F 1
+R Testes/90-45/84.txt
+F 1
+R Testes/90-45/87.txt
+A 328
+S 515
+F 1
+R Testes/90-45/85.txt
+D 542
+B 984
+D 665
+F 1
+R Testes/90-45/87.txt
+A 450
+E

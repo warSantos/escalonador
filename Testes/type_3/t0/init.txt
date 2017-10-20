@@ -1,9 +1,0 @@
-F 1
-R Testes/1.txt
-F 1
-R Testes/2.txt
-F 1
-R Testes/3.txt
-F 1
-R Testes/4.txt
-E

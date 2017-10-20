@@ -16,7 +16,7 @@ int main()
     
     while(counter < linhas){
     
-        randChar = "QUP"[random () % 3];
+        randChar = "QQQ"[random () % 3];
         fprintf(pont_arq, "%c\n", randChar);
         counter++;
     } 

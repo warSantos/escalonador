@@ -1,2 +1,0 @@
-Teste minimo, limte de 3 processo com ate 5 instruções
-Sem ramificação de processos

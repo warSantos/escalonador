@@ -1,0 +1,20 @@
+F 1
+R Testes/90-20/73.txt
+B 189
+S 943
+A 39
+D 378
+A 843
+F 1
+R Testes/90-20/6.txt
+D 509
+D 449
+B 559
+S 497
+B 464
+F 1
+R Testes/90-20/47.txt
+A 552
+A 631
+S 89
+E

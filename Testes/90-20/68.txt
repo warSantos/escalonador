@@ -1,0 +1,21 @@
+D 931
+B 505
+D 811
+A 471
+B 804
+A 154
+B 678
+F 1
+R Testes/90-20/84.txt
+A 149
+F 1
+R Testes/90-20/88.txt
+D 2
+S 778
+D 79
+A 535
+F 1
+R Testes/90-20/69.txt
+S 577
+B 417
+E

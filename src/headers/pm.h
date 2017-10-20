@@ -145,18 +145,4 @@ int priStatic(sint base);
 // Valor de alteração definido no parâmetro reajuste.
 int priDinamic(sint base, sint reajuste);
 
-// Funções de/para debug
-
-void showP2(Processo *p);
-
-void ptr(Processo *t);
-
-// Imprimi a estrutura completa de um processo.
-void showP(Processo *p);
-
-// Imprime as instruções e seus respectivos dados.
-// Informa a quantidade de instruções do processo.
-void showInst(TadInst *t);
-
-
 #endif

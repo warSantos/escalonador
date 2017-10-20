@@ -14,9 +14,5 @@
 // cria um vetor novo e copia os dados do antigo para o novo.
 void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType);
 
-void debug();
-#define db debug();
-
-
 #endif /* UTILS_H */
 

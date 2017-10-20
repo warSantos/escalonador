@@ -9,8 +9,8 @@
 typedef short int sint;
 
 // Função que le o arquivo de instruções e retorna estas armzenzadas em um vetor.
-sint leArquivo(char *fileCmd, char **cmd);
+int leArquivo(char *fileCmd, char **cmd);
 
 // Envia comandos através do pipe para o Process Manager.
-sint enviaComandos(char *vInst, sint size);
+sint enviaComandos(char *vInst, int size, char **init);
 #endif

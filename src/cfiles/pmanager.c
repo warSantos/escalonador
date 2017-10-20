@@ -7,11 +7,11 @@
 #define L 10
 #define PRIO_INIT 100
 
-int main(){        
+int main(int argc, char **argv){                
     
     // Criando processo init.txt na tabela.
     manager = iniciaPM();
-    Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, "Testes/init.txt");                
+    Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, argv[2]);                        
     temp->prioridade = PRIO_INIT;
     addObj(manager->tabelaPcb, (void *)temp);                
     // copiando processo init.txt para cpu.
@@ -20,23 +20,21 @@ int main(){
     char inst;    
     int newPid = 0;
     // Menu de indentificação dos comandos vindos do commander.
-    while(read(0, &inst, 1)){    
+    while(read(0, &inst, 1)){        
         
         //newPid = fcfs();                
         //newPid = fcfs(newPid);                
         //newPid = roundRobin(newPid);
-        //newPid = priStatic(0);
-        newPid = priDinamic(0, -2);
+        newPid = priStatic(0);        
+        //newPid = priDinamic(0, -2);
         if(newPid == -1){
-                        
-            printf("PM terminado.\n");               
-            exit(0);
+                                    
+            callReporter();                 
+            printf("*********** %d - %c ************\n", manager->tempoGeral, inst);
+            return 0;
         }
         
-        trocaContexto(newPid , 2, 0);        
-        printf("PROCESSO %d ESCALONADO.\n", newPid);
-        printf("CONTADOR DE PROGRAMA %d.\n", ((Processo *)getObj(manager->tabelaPcb, newPid))->pc);
-        printf("*********** %d - %c ************\n", manager->tempoGeral, inst);
+        trocaContexto(newPid , 5, 0);                
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
                         
             executaProcesso(manager->cpu);            
@@ -51,8 +49,8 @@ int main(){
             callReporter();                 
         }else if(inst == 'T'){ // chama o reporter e encerra o programa.
             
-            callReporter();
-            break;
+            callReporter();            
+            return 0;
         }else{
             
             printf("Instrução: %c linha: %hu, ignorada!\n", inst , manager->tempoGeral + 1);

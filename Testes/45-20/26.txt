@@ -1,0 +1,22 @@
+S 1
+D 947
+F 1
+R Testes/45-20/31.txt
+F 1
+R Testes/45-20/44.txt
+D 747
+F 1
+R Testes/45-20/35.txt
+B 183
+S 625
+F 1
+R Testes/45-20/36.txt
+S 639
+F 1
+R Testes/45-20/30.txt
+F 1
+R Testes/45-20/33.txt
+B 385
+S 294
+A 950
+E

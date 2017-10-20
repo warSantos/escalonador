@@ -1,1 +1,0 @@
-Testes sem bloqueio de processos e chamadas de reporter

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main(){
+int main(int argc, char **argv){
 
 	srandom(time(NULL));
     char randChar;
@@ -21,7 +21,8 @@ int main(){
 	    
 	    sprintf(arq ,"%d.txt", qtdeP);
 	    pont_arq = fopen(arq, "w");
-	    int l = linhas - random () % linhas;
+	    //int l = linhas - random () % linhas;
+	    int l = linhas - (random () % (linhas / 2) + 1);
         while(counter < l){
                         
             randChar = "ADBSF"[random () % 5];
@@ -36,7 +37,7 @@ int main(){
                 if(m < bkp || (m == bkp && qtdeP < bkp)){
                 
                     fprintf(pont_arq, "%c 1\n", randChar);
-                    fprintf(pont_arq, "R Testes/%d.txt\n", m);
+                    fprintf(pont_arq, "R %s/%d.txt\n", argv[1], m);
                 }
             }
             counter++;
@@ -51,7 +52,7 @@ int main(){
     while(counter <= bkp){
         
         fprintf(pont_arq, "F 1\n");
-        fprintf(pont_arq, "R Testes/%d.txt\n", counter);
+        fprintf(pont_arq, "R %s/%d.txt\n", argv[1], counter);
         counter++;
     }
     fprintf(pont_arq, "E\n");

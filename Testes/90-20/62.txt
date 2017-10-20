@@ -1,0 +1,14 @@
+D 111
+B 60
+D 897
+D 721
+A 9
+F 1
+R Testes/90-20/67.txt
+A 637
+F 1
+R Testes/90-20/76.txt
+D 232
+D 544
+A 713
+E

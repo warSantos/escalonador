@@ -2,30 +2,32 @@
 
 #define N 10000
 
-sint leArquivo(char *fileCmd, char **cmd){
+int leArquivo(char *fileCmd, char **cmd){
 
     FILE *leitor = fopen(fileCmd, "r");
     if(leitor == NULL){
 
         return -1;
     }    
-    sint cont = 0, size = N;
+    int cont = 0, size = N;
     *cmd = malloc(sizeof(char)*size);
+    
     while(fscanf(leitor, "%c\n", &(*cmd)[cont]) != EOF){
     
         if(cont == size - 2){ // hora de allocar mais memória para o vetor.
             
             // Dobrando a quantidade de memória para o novo vetor
-            *cmd = (char *) myrealloc(cmd, size, size * 2, sizeof(char));
+            *cmd = (char *) myrealloc((void *)*cmd, size, size * 2, sizeof(char));            
             size *= 2;            
         }                        
         cont++;       
-    }        
-    *cmd = (char *) myrealloc(*cmd, (size_t)size, (size_t)cont, sizeof(char));            
-    return cont;    
+        
+    }    
+    *cmd = (char *) myrealloc(*cmd, (size_t)size, (size_t)cont, sizeof(char));                      
+    return cont;        
 }
 
-sint enviaComandos(char *vInst, sint size){
+sint enviaComandos(char *vInst, int size, char **init){
     
     // Criando pipe de comunicação entre o process manager e commander.
     
@@ -44,7 +46,7 @@ sint enviaComandos(char *vInst, sint size){
             return -1;
         }
         // Troca de imagem (criando o process Manager).
-        if(execvp("./pmnger", (char **)NULL) < 0){
+        if(execvp("./pmnger", init) < 0){
             
             printf("Falha na troca de imagem.\n");
             return -1;
@@ -60,16 +62,16 @@ sint enviaComandos(char *vInst, sint size){
             printf("Erro dup2 processo filho.\n");
             return -1;
         }              
-        sint idInst = 0;
+        int idInst = 0;
         close(cp[0]);
         
         while (idInst < size) { // Enquanto houver instruções...
             
-            //sleep(1);            
+            //sleep(1); 
             write(1, &vInst[idInst], 1);            
             idInst++;                           
-        }          
-        close(cp[1]);           
+        }                  
+        close(cp[1]);                   
         fim = wait(&pid);                        
         exit(0);               
     }    
