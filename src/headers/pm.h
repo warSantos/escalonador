@@ -120,6 +120,16 @@ int retPBloq(sint size);
 // Fila
 int fcfs();
 
+//RoundRobin
+int rr(sint *posicao);
+
+//prioridade
+int prioridade();
+
+//dando as prioridades para os processos
+int prioridaderandom();
+int prioridadetamanho();
+
 // Funções de/para debug
 
 void showP2(Processo *p);
