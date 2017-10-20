@@ -3,7 +3,12 @@
 #include <time.h>
 
 int main(int argc, char **argv){
-
+    
+    if(argv[1] == NULL){
+        
+        printf("Arquivo inválido.\n");
+        return 1;
+    }
 	srandom(time(NULL));
     char randChar;
 	int  linhas, counter = 0, qtdeP, va, bkp;

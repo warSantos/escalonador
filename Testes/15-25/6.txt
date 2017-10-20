@@ -1,0 +1,20 @@
+S 325
+D 433
+A 840
+D 209
+A 411
+F 1
+R Testes/15-25/12.txt
+F 1
+R Testes/15-25/15.txt
+F 1
+R Testes/15-25/9.txt
+A 605
+F 1
+R Testes/15-25/9.txt
+S 492
+B 532
+D 609
+S 409
+A 741
+E

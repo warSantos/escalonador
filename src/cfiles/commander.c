@@ -70,9 +70,17 @@ int enviaComandos(char *vInst, int size, char **init){
             //sleep(1); 
             write(1, &vInst[idInst], 1);            
             idInst++;                           
-        }                  
+        }                
+        if(idInst == size){
+            
+            printf("Fim das instruções.\n");
+        }
         close(cp[1]);                   
         fim = wait(&pid);                        
+        if(fim < 0){
+            
+            exit(1);
+        }
         exit(0);               
     }    
     return -1;

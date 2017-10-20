@@ -1,0 +1,22 @@
+B 294
+D 605
+S 660
+A 331
+B 849
+B 396
+A 941
+B 154
+B 553
+A 101
+F 1
+R Testes/20-20/10.txt
+A 901
+F 1
+R Testes/20-20/17.txt
+F 1
+R Testes/20-20/16.txt
+B 549
+F 1
+R Testes/20-20/12.txt
+A 382
+E

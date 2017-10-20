@@ -39,6 +39,8 @@ Processo *newProcesso(int pid, int pidPai,
         int prioridade, int tempoInicio, char *arquivo){
 
     Processo *temp = malloc(sizeof(Processo));
+    temp->cpuTimes = 0;
+    temp->espera = 0;
     temp->pid = pid;    
     manager->pidPronto[temp->pid] = 1;    
     temp->pidPai = pidPai;    
@@ -141,7 +143,7 @@ void retiraP(Processo *p, Cpu *cpu){
     p->tempoAcumulado += cpu->tempoCorrente;    
 }
 
-void trocaContexto(int pid, int quantum, int interrupt){
+void trocaContexto(int pid, int quantum){
     
     // removendo o processo da cpu e voltando ele para tabela
     Processo *p = getObj(manager->tabelaPcb, manager->pidExec);
@@ -156,6 +158,8 @@ void trocaContexto(int pid, int quantum, int interrupt){
     p = getObj(manager->tabelaPcb , pid);
     escalona(p, manager->cpu, quantum);
     manager->pidExec = pid;
+    p->cpuTimes++;
+    p->espera = p->espera + (manager->tempoGeral - p->espera);
     manager->pidPronto[manager->pidExec] = 0;
 }
 
@@ -465,15 +469,33 @@ void callReporter(){
     }   
 }
 
-// Funções de impressão e debug.
-
-void showInst(TadInst *t){
+void minera(char *arq, char quantum){
     
     int i;
-    printf("Qtade de Instruções: %d\n\n", t->size);
-    for(i = 0; i < t->size; ++i){
+    long double mediaEspera = 0, mediaCpuTimes = 0;
+    long int totalEspera = 0, totalCpuTimes = 0, totalPid = (long int) getLast(manager->tabelaPcb);
+    Processo *p;    
+    char str[8];
+    str[0] = arq[7];
+    str[1] = arq[8];
+    str[2] = arq[9];
+    str[3] = arq[10];
+    str[4] = arq[11];
+    str[5] = '-';
+    str[6] = quantum;
+    FILE *e = fopen(str, "a");    
+    for(i = 0; i < getLast(manager->tabelaPcb); ++i){
         
-        printf("I: %c, Dados: %s\n", t->instrucao[i], t->dados[i]);
+        p = getObj(manager->tabelaPcb, i);
+        totalEspera += p->espera;
+        totalCpuTimes += p->cpuTimes;
+        fprintf(e ,"%d %d\n", p->cpuTimes, p->espera);
     }
-    printf("\n");
+    mediaEspera = ((long double) totalEspera / totalPid);
+    mediaCpuTimes = ((long double) totalCpuTimes / totalPid);
+    fprintf(e, "QI: %d\n", manager->tempoGeral);
+    fprintf(e ,"TP: %ld\n", totalPid);
+    fprintf(e ,"ME: %LF\n", mediaEspera);
+    fprintf(e ,"MC: %LF\n", mediaCpuTimes);
+    fclose(e);    
 }

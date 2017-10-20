@@ -23,7 +23,7 @@ typedef struct tadInst {
 
 // Esse tipo de dados tem a intenção de realizar a simulação da CPU física no programa.
 typedef struct processador {
-        
+            
     int pInst; // ponteiro para o array de instruções do programa.
     int pc; // Contador atual do programa.
     int valorInteiro; // variável utilizada para realizar os calculos de simulação.
@@ -36,6 +36,8 @@ typedef struct processador {
 // Contem a estrutura de dados necessária para simular um processo.
 typedef struct processo {
     
+    int cpuTimes; // quantidade de vezes que um processo passa na CPU.
+    int espera; // quantidade acumulada de tempo que o processo esperou para entrar na CPU.
     int pid; // id do processo.
     int pidPai;
     int pc; // ponteiro para array que contem as instruções do programa.
@@ -94,7 +96,7 @@ void escalona(Processo *p, Cpu *cpu, int tempoAloc);
 void retiraP(Processo *p, Cpu *cpu);
 
 // Realiza troca de contexto.
-void trocaContexto(int pid, int tempoAloc, int interrupt);
+void trocaContexto(int pid, int tempoAloc);
 
 // Executa as instruções de um processo na CPU.
 void executaProcesso(Cpu *cpu);
@@ -140,5 +142,8 @@ int priStatic(int base);
 // para inicio de cálculo.
 // Valor de alteração definido no parâmetro reajuste.
 int priDinamic(int base, int reajuste);
+
+
+void minera(char *arq, char quantum);
 
 #endif

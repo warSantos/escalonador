@@ -1,0 +1,13 @@
+F 1
+R Testes/20-20/16.txt
+D 468
+S 89
+S 882
+F 1
+R Testes/20-20/18.txt
+B 733
+S 834
+F 1
+R Testes/20-20/19.txt
+D 97
+E

@@ -6,16 +6,16 @@
 
 #define L 10
 #define PRIO_INIT 100
+#define QUANTUM 5
 
 int main(int argc, char **argv){                
     
     // Criando processo init.txt na tabela.
     manager = iniciaPM();
-    Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, argv[2]);                        
+    Processo *temp = newProcesso(0, 0, 20, manager->tempoGeral, argv[2]);
     temp->prioridade = PRIO_INIT;
     addObj(manager->tabelaPcb, (void *)temp);                
-    // copiando processo init.txt para cpu.
-    //escalona(getObj(manager->tabelaPcb, 0), manager->cpu, 5);
+    // copiando processo init.txt para cpu.    
         
     char inst;    
     int newPid = 0;
@@ -28,13 +28,13 @@ int main(int argc, char **argv){
         newPid = priStatic(0);        
         //newPid = priDinamic(0, -2);
         if(newPid == -1){
-                                    
-            callReporter();                 
-            printf("*********** %d - %c ************\n", manager->tempoGeral, inst);
+                  
+            printf("%s\n", argv[2]);
+            printf("TERMINADO.\n");
+            minera(argv[2], (char) (QUANTUM + 48));
             return 0;
-        }
-        
-        trocaContexto(newPid , 5, 0);                
+        }        
+        trocaContexto(newPid , QUANTUM);                
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
                         
             executaProcesso(manager->cpu);            
@@ -42,7 +42,7 @@ int main(int argc, char **argv){
             
             if(unblock(manager->pidBloq, manager->pidPronto, manager->pidExec) == -1){
                 
-                //printf("SEM PROCESSOS NA FILA DE BLOQUEADO.\n");
+                printf("SEM PROCESSOS NA FILA DE BLOQUEADOS.\n");
             }
         }else if(inst == 'P'){ // chama o reporter.
                         
@@ -53,7 +53,7 @@ int main(int argc, char **argv){
             return 0;
         }else{
             
-            printf("Instrução: %c linha: %hu, ignorada!\n", inst , manager->tempoGeral + 1);
+            printf("Instrução: %c linha: %d, ignorada!\n", inst , manager->tempoGeral + 1);
         }
         // aqui entra a política de escalonamento.
         // se for hora de escalonar um processo

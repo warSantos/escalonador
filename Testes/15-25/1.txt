@@ -1,0 +1,25 @@
+A 715
+F 1
+R Testes/15-25/5.txt
+A 266
+F 1
+R Testes/15-25/15.txt
+S 571
+A 254
+D 416
+D 143
+A 434
+F 1
+R Testes/15-25/7.txt
+B 547
+D 976
+S 104
+S 994
+F 1
+R Testes/15-25/11.txt
+B 216
+F 1
+R Testes/15-25/15.txt
+F 1
+R Testes/15-25/3.txt
+E
