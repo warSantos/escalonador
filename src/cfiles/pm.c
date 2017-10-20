@@ -210,7 +210,7 @@ void executaProcesso(Cpu *cpu) {
                 id = getLast(manager->tabelaPcb);
                 fk = newProcesso(id, temp->pid, 15, manager->tempoGeral,
                         temp->vetorInst->dados[cpu->pc]);
-                
+                manager->tabelaPcb[temp->pid].prioridade = prioridadetamanho();
                 if(id < getLast(manager->tabelaPcb)){
                 
                     changeObj(manager->tabelaPcb, (void *)fk, id);
@@ -512,4 +512,49 @@ void ptr(Processo *t){
     FILE *p = fopen("ptr.txt","a");
     fprintf(p, "%p\n", t);
     fclose(p);
+}
+int rr(sint *posicao){
+    sint aux1 = 0,aux = 0;
+    Processo *p;
+    sint size = getLast(manager->tabelaPcb);
+    *posicao = *posicao + 1;
+    if(*posicao == size){
+        *posicao == 0;
+    }   
+    for(; *posicao < size ; *posicao++){
+        if(manager->tabelaPcb[i].prioridade == 1){
+            p = getObj(manager->tabelaPcb,&posicao);
+            return p->pid;
+        }
+    }
+    return retPBloq(size);   
+}
+int prioridade(){
+    int i = 0;
+    sint aux1 = 0,aux = 0;
+    Processo *p;
+    sint size = getLast(manager->tabelaPcb);   
+    for(i=0 ; i < size ; i++){
+        if(manager->tabelaPcb[i].prioridade > aux && manager->pidPronto == 1){
+            aux1 = i;
+            aux = manager->tabelaPcb[i].prioridade;
+        }
+    }
+    if(manager->pidPronto == 1){
+        manager->tabelaPcb[i].prioridade = manager->tabelaPcb[i].prioridade/10;
+        p = getObj(manager->tabelaPcb, i); 
+        return p->pid;
+    }
+    return retPBloq(size);  
+}
+int prioridaderandom(){
+    sint size = getLast(manager->tabelaPcb);
+    srandom(time(NULL));
+    sint prioridade = (random() % size-1) + 1;
+    return prioridade;
+
+}
+int prioridadetamanho(){
+    sint size = getLast(manager->tabelaPcb);
+    return size;
 }
