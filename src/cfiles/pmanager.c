@@ -4,9 +4,8 @@
 
 #include "../headers/pm.h"
 
-#define L 10
-#define PRIO_INIT 100
-#define QUANTUM 5
+#define PRIO_INIT 100 // define prioridade inicial do processo init.
+#define QUANTUM 5 // define a quantidade de instruções por um Q.
 
 int main(int argc, char **argv){                
     
@@ -55,6 +54,7 @@ int main(int argc, char **argv){
             
             printf("Instrução: %c linha: %d, ignorada!\n", inst , manager->tempoGeral + 1);
         }
+        //printf("**** %d %c *****\n", manager->tempoGeral, inst);
         // aqui entra a política de escalonamento.
         // se for hora de escalonar um processo
             // então escalona.        

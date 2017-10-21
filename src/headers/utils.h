@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define gh printf("GET HERE!\n");
-
 // cria um vetor novo e copia os dados do antigo para o novo.
 void *myrealloc(void *vetor, size_t len, size_t newLen, size_t sizeType);
 

@@ -2,7 +2,7 @@
 
 # Declaração das variáveis de compilação.
 CC = gcc
-CFLAGS = -c -Wall -O3
+CFLAGS = -c -O3
 HDRS = src/headers/
 SRC = src/cfiles/
 OBJ = ./obj/

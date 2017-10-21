@@ -11,7 +11,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define TAM 15
+#define TAM 15 // define o valor inicial em bytes para alocação de
+               // memória para vetor de instruções dos processos.
 
 // Estrutura com instrução e dados.
 typedef struct tadInst {

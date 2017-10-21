@@ -1,6 +1,7 @@
 #include "../headers/commander.h"
 
-#define N 10000
+#define LEN 10000 // define a quantidade inicial de 
+                  // memmória em bytes a ser alocada para o vetor de instruções.
 
 int leArquivo(char *fileCmd, char **cmd){
 
@@ -9,7 +10,7 @@ int leArquivo(char *fileCmd, char **cmd){
 
         return -1;
     }    
-    int cont = 0, size = N;
+    int cont = 0, size = LEN;
     *cmd = malloc(sizeof(char)*size);
     
     while(fscanf(leitor, "%c\n", &(*cmd)[cont]) != EOF){
