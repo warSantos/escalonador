@@ -5,11 +5,11 @@
 #include "../headers/pm.h"
 
 #define PRIO_INIT 100 // define prioridade inicial do processo init.
-#define QUANTUM 3 // define a quantidade de instruções por um Q.
-#define ESC 1 // define qual algoritmo de escalonamento deve ser utilizado.
+#define QUANTUM 7 // define a quantidade de instruções por um Q.
+#define ESC 3 // define qual algoritmo de escalonamento deve ser utilizado.
 #define BASE 0 // define o o limite de comparação de prioridade
                // para o algoritmo de prioridade.
-#define MINERA 1 // define se dever ser utilizada a função minera.
+#define MINERA 0 // define se dever ser utilizada a função minera.
 
 int main(int argc, char **argv){                
     
