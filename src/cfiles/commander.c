@@ -68,7 +68,7 @@ int enviaComandos(char *vInst, int size, char **init){
         
         while (idInst < size) { // Enquanto houver instruções...
             
-            sleep(1); 
+            //sleep(1); 
             write(1, &vInst[idInst], 1);            
             idInst++;                           
         }                

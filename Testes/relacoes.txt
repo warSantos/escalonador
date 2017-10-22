@@ -23,5 +23,8 @@ Não faz diferença a quantidade de arquivos uma vez que o init acorda todos os 
     relógio da cpu x quantidade de processos.
     média de espera x relógio da cpu.
     comparar os algoritmos entre eles mesmos com relação ao quantum em relação ao tempo de espera.
-mesmo com tempo de cpu igual ainda sim houve variação no tempo de espera.
-falar que desconsiderou os processos.
+    mesmo com tempo de cpu igual ainda sim houve variação no tempo de espera.
+    falar que desconsiderou a instrução U.
+    Mostrar o aumento da quantidade de operações necessárias para executar todos os procesos.
+    Mostrar que o round robin foi pior no tempo médio de espera em relação ao fcfs e prioridade.
+    Mostrar nas conclusões que o quantum foi fator de maior influencia para os resultados.

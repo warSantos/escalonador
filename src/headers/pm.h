@@ -36,9 +36,11 @@ typedef struct processador {
 
 // Contem a estrutura de dados necessária para simular um processo.
 typedef struct processo {
-    
+        
     int cpuTimes; // quantidade de vezes que um processo passa na CPU.
     int espera; // quantidade acumulada de tempo que o processo esperou para entrar na CPU.
+    int lastTimeCpu; // marca o horário da última saída da cpu.
+    int lastQuantum; // guarda a última quantidade de tempo permanecida na cpu. 
     int pid; // id do processo.
     int pidPai;
     int pc; // ponteiro para array que contem as instruções do programa.

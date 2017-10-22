@@ -41,6 +41,8 @@ Processo *newProcesso(int pid, int pidPai,
     Processo *temp = malloc(sizeof(Processo));
     temp->cpuTimes = 0;
     temp->espera = 0;
+    temp->lastTimeCpu = 0;
+    temp->lastQuantum = 0;
     temp->pid = pid;    
     manager->pidPronto[temp->pid] = 1;    
     temp->pidPai = pidPai;    
@@ -136,6 +138,7 @@ void escalona(Processo *p, Cpu *cpu, int quantum){
     cpu->valorInteiro = p->valorInteiro;
     cpu->tempoLimite = quantum;
     cpu->vetorInst = p->vetorInst;     
+    p->lastTimeCpu = manager->tempoGeral;
 }
 
 void retiraP(Processo *p, Cpu *cpu){
@@ -143,7 +146,8 @@ void retiraP(Processo *p, Cpu *cpu){
     // copiando o estado atual da cpu para os processos.
     p->pc = cpu->pc;
     p->valorInteiro = cpu->valorInteiro;
-    p->tempoAcumulado += cpu->tempoCorrente;    
+    p->tempoAcumulado += cpu->tempoCorrente;
+    p->lastQuantum = cpu->tempoCorrente;    
 }
 
 void trocaContexto(int pid, int quantum){
@@ -159,10 +163,10 @@ void trocaContexto(int pid, int quantum){
     
     // escalonando o proximo processo.
     p = getObj(manager->tabelaPcb , pid);
+    p->espera = p->espera + (manager->tempoGeral - (p->lastTimeCpu + p->lastQuantum));
     escalona(p, manager->cpu, quantum);
     manager->pidExec = pid;
-    p->cpuTimes++;
-    p->espera = p->espera + (manager->tempoGeral - p->espera);
+    p->cpuTimes++;    
     manager->pidPronto[manager->pidExec] = 0;
 }
 

@@ -5,7 +5,7 @@
 #include "../headers/pm.h"
 
 #define PRIO_INIT 100 // define prioridade inicial do processo init.
-#define QUANTUM 7 // define a quantidade de instruções por um Q.
+#define QUANTUM 3 // define a quantidade de instruções por um Q.
 #define ESC 1 // define qual algoritmo de escalonamento deve ser utilizado.
 #define BASE 0 // define o o limite de comparação de prioridade
                // para o algoritmo de prioridade.
