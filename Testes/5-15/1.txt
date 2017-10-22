@@ -1,0 +1,15 @@
+A 346
+D 954
+F 1
+R Testes/5-15/3.txt
+A 273
+S 895
+F 1
+R Testes/5-15/5.txt
+A 410
+D 267
+A 445
+F 1
+R Testes/5-15/4.txt
+S 486
+E

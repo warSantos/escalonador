@@ -9,10 +9,10 @@ int main()
 	int  linhas, counter = 0;
 	FILE *pont_arq; 
 	
-    printf("Digite quantidade de comandos \n");
+    printf("Digite quantidade de comandos: ");
     scanf("%d", &linhas);
 	
-	pont_arq = fopen("cmds.txt", "w");
+	pont_arq = fopen("inst.txt", "w");
     
     while(counter < linhas){
     

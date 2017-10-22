@@ -1,7 +1,7 @@
 #include "../headers/pm.h"
 #include <unistd.h>
 
-/* ### FUNÇÕES PARA INICIARLIZAR, COPIAR E MANNIPULAR OS TIPOS DE DADOS. ###*/
+/* ### FUNÇÕES PARA INICIARLIZAR, COPIAR E MANNIPULAR OS ESTRUTURAS DE DADOS. ###*/
 
 TadInst *iniciaTadInst(int size){
             
@@ -84,7 +84,7 @@ TadInst *criaVetorInst(char *arquivo) {
         vInst->dados[cont] = malloc(sizeof (char) * len);               
         strcpy(vInst->dados[cont], buff);        
         
-        if (cont == vInst->size - 1) { // hora de allocar mais memória para o vetor.
+        if (cont == vInst->size - 1) { // necessidade de allocar mais memória para o vetor.
                                        
             temp = iniciaTadInst(vInst->size * 2);            
             copiaInstrucao(temp, vInst);              
@@ -124,12 +124,14 @@ int unblock(int *bloq, int *pronto, int size){
 
 void block(int *bloq, int *pronto, int pid){
     
-    bloq[pid] = 1;
-    pronto[pid] = 0;
+    // alterando a fila do processo.
+    bloq[pid] = 1; 
+    pronto[pid] = 0; 
 }
 
 void escalona(Processo *p, Cpu *cpu, int quantum){
         
+    // copiando os valores do processo para CPU.
     cpu->pc = p->pc;
     cpu->valorInteiro = p->valorInteiro;
     cpu->tempoLimite = quantum;
@@ -138,6 +140,7 @@ void escalona(Processo *p, Cpu *cpu, int quantum){
 
 void retiraP(Processo *p, Cpu *cpu){
         
+    // copiando o estado atual da cpu para os processos.
     p->pc = cpu->pc;
     p->valorInteiro = cpu->valorInteiro;
     p->tempoAcumulado += cpu->tempoCorrente;    
@@ -316,58 +319,6 @@ int priStatic(int base){
     // tenta retornar um bloqueado ou manter o processo da cpu.
     return retPBloq(size);            
 }
-/*
-void setPriori(Processo *p, int v){
-    
-    p->prioridade = p->prioridade + v;
-}
-*/
-int priDinamic(int base, int reajuste){
-    
-    int i, pid = -1;
-    Processo *p;
-    int size = getLast(manager->tabelaPcb), temp = base;    
-    for(i = 0; i < size; ++i){
-        
-        if(manager->pidPronto[i] == 1){ 
-                                                        
-            p = getObj(manager->tabelaPcb, i);            
-            if(compare(p->prioridade, temp)){
-                
-                temp = p->prioridade;
-                pid = p->pid;
-            }            
-        }                
-    } 
-    
-    if(pid > -1){ // reajustando a prioridade do processo pronto.
-        
-        if(p->pc > 0 
-                && p->vetorInst->instrucao[p->pc] == 'B'){
-            
-            p->prioridade--;
-        }else{
-            p->prioridade += reajuste;
-        }
-        return pid;
-    }
-    // Se acabar os processos na fila de pronto 
-    // tenta retornar um bloqueado ou manter o processo da cpu.
-    if((pid = retPBloq(size)) > -1){ 
-                // reajusta a prioridade do processo desbloqueado.
-        
-        p = getObj(manager->tabelaPcb, pid);        
-        
-        if(p->pc > 0
-                && p->vetorInst->instrucao[p->pc] == 'B'){
-            
-            p->prioridade--;
-        }else{
-            p->prioridade += reajuste;
-        }
-    }            
-    return pid;
-}
 
 void sendP(Processo *p, int leg0, int leg1, int leg2){
         
@@ -475,27 +426,27 @@ void minera(char *arq, char quantum){
     long double mediaEspera = 0, mediaCpuTimes = 0;
     long int totalEspera = 0, totalCpuTimes = 0, totalPid = (long int) getLast(manager->tabelaPcb);
     Processo *p;    
-    char str[8];
-    str[0] = arq[7];
-    str[1] = arq[8];
-    str[2] = arq[9];
-    str[3] = arq[10];
-    str[4] = arq[11];
-    str[5] = '-';
-    str[6] = quantum;
-    FILE *e = fopen(str, "a");    
+    char str[9];   
+    for(i = 7; arq[i] != '/' ;++i){
+        
+        str[i - 7] = arq[i];        
+        
+    }    
+    str[i - 7] = '-';
+    str[(i += 1) - 7] = quantum;
+    str[(i += 1) - 7] = '\0';
+    FILE *e = fopen(str, "a");      
     for(i = 0; i < getLast(manager->tabelaPcb); ++i){
         
         p = getObj(manager->tabelaPcb, i);
         totalEspera += p->espera;
-        totalCpuTimes += p->cpuTimes;
-        fprintf(e ,"%d %d\n", p->cpuTimes, p->espera);
+        totalCpuTimes += p->cpuTimes;        
     }
-    mediaEspera = ((long double) totalEspera / totalPid);
+    mediaEspera = (long double)( totalEspera / totalPid);
     mediaCpuTimes = ((long double) totalCpuTimes / totalPid);
-    fprintf(e, "QI: %d\n", manager->tempoGeral);
-    fprintf(e ,"TP: %ld\n", totalPid);
-    fprintf(e ,"ME: %LF\n", mediaEspera);
-    fprintf(e ,"MC: %LF\n", mediaCpuTimes);
+    fprintf(e, "Qtde de instruções: %d\n", manager->tempoGeral);
+    fprintf(e ,"Qtde de processos: %ld\n", totalPid);
+    fprintf(e ,"Média de espera fora da CPU: %LF\n", mediaEspera);
+    fprintf(e ,"Média de vezes na CPU: %LF\n", mediaCpuTimes);
     fclose(e);    
 }

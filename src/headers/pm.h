@@ -11,7 +11,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define TAM 15 // define o valor inicial em bytes para alocação de
+#define TAM 20 // define o valor inicial em bytes para alocação de
                // memória para vetor de instruções dos processos.
 
 // Estrutura com instrução e dados.
@@ -68,7 +68,7 @@ TadPm *manager;
 // Iniciar vetor de instruções
 TadInst *iniciaTadInst(int size);
 
-// Copia as instruções de um vetor de instruções para outro
+// Realiza cópia do vetor de instruções de um processo.
 void copiaInstrucao(TadInst *destino, TadInst *origem);
 
 // Inicia (retorna) cpu virtual.
@@ -137,14 +137,11 @@ int definePrioridade(Processo *p);
 // para inicio de cálculo.
 int priStatic(int base);
 
-// Escalonamento por prioridade dinâmica,
-// (as prioiridades são alteradas ao longo da execução).
-// Parâmetro base define o limite superior ou inferior
-// para inicio de cálculo.
-// Valor de alteração definido no parâmetro reajuste.
-int priDinamic(int base, int reajuste);
-
-
+// Retorna log com informações de execução, como quantidade 
+// de processos criados, tempo de espera médio, quantidade de 
+// vezes na CPU.
+// OBS* Adaptada para utilzar gerar testes conforme as especificações
+// de diretório para teste no arquivo README.md
 void minera(char *arq, char quantum);
 
 #endif

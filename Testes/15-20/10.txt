@@ -1,15 +1,13 @@
-A 586
+S 792
+B 327
+A 428
+A 648
+S 542
+S 191
 F 1
-R Testes/15-20/13.txt
+R Testes/15-20/11.txt
+S 602
+D 289
 F 1
-R Testes/15-20/13.txt
-B 221
-A 424
-F 1
-R Testes/15-20/12.txt
-A 796
-B 557
-A 194
-B 673
-A 585
+R Testes/15-20/14.txt
 E

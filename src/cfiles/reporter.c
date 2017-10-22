@@ -1,6 +1,5 @@
 #include "../headers/reporter.h"
 
-
 void showTable(Processo *p, int tempoAtual, int legenda0, int legenda1, int legenda2){        
     
     if (legenda0) {
@@ -34,5 +33,4 @@ void showTable(Processo *p, int tempoAtual, int legenda0, int legenda1, int lege
         }
     }    
     printf("**************************************************************************************\n");
-
 }

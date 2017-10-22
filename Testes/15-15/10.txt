@@ -1,0 +1,13 @@
+F 1
+R Testes/15-15/11.txt
+D 441
+F 1
+R Testes/15-15/11.txt
+D 213
+D 334
+A 395
+F 1
+R Testes/15-15/15.txt
+D 403
+D 629
+E

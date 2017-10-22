@@ -1,0 +1,9 @@
+F 1
+R Testes/5-10/3.txt
+F 1
+R Testes/5-10/5.txt
+A 804
+A 493
+F 1
+R Testes/5-10/4.txt
+E

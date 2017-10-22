@@ -1,15 +1,17 @@
+S 132
+B 486
+S 942
+S 930
 F 1
-R Testes/20-20/12.txt
-B 754
-B 447
-F 1
-R Testes/20-20/9.txt
+R Testes/20-20/20.txt
+B 129
+A 63
 F 1
 R Testes/20-20/14.txt
-A 532
 F 1
-R Testes/20-20/16.txt
-S 168
-B 289
-D 908
+R Testes/20-20/13.txt
+B 595
+D 58
+S 345
+B 20
 E

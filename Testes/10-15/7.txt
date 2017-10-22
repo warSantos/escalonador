@@ -1,0 +1,12 @@
+D 673
+D 179
+D 731
+D 403
+F 1
+R Testes/10-15/9.txt
+S 725
+F 1
+R Testes/10-15/10.txt
+D 294
+B 522
+E

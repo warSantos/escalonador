@@ -1,0 +1,16 @@
+D 351
+F 1
+R Testes/15-15/15.txt
+F 1
+R Testes/15-15/15.txt
+A 741
+A 940
+B 566
+A 595
+B 173
+A 426
+S 702
+F 1
+R Testes/15-15/10.txt
+A 494
+E

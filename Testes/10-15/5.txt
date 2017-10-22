@@ -1,0 +1,17 @@
+S 40
+A 584
+S 50
+D 248
+B 728
+F 1
+R Testes/10-15/7.txt
+F 1
+R Testes/10-15/8.txt
+S 384
+F 1
+R Testes/10-15/9.txt
+D 565
+S 710
+A 102
+S 56
+E

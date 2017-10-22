@@ -1,13 +1,13 @@
-A 579
-B 728
+S 398
+A 661
+B 785
+S 391
+S 388
+B 586
+B 290
 F 1
-R Testes/20-20/19.txt
-A 275
-A 626
-D 359
-S 2
-B 167
-S 688
-D 905
-A 1
+R Testes/20-20/10.txt
+D 401
+F 1
+R Testes/20-20/8.txt
 E

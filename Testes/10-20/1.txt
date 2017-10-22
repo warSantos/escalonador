@@ -1,0 +1,17 @@
+S 310
+D 903
+S 33
+F 1
+R Testes/10-20/4.txt
+D 638
+B 423
+B 565
+S 604
+B 87
+F 1
+R Testes/10-20/9.txt
+F 1
+R Testes/10-20/5.txt
+A 907
+D 253
+E

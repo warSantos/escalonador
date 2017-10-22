@@ -1,0 +1,9 @@
+F 1
+R Testes/20-10/11.txt
+S 429
+A 628
+S 620
+S 500
+F 1
+R Testes/20-10/19.txt
+E

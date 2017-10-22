@@ -1,0 +1,4 @@
+B 692
+F 1
+R Testes/20-5/15.txt
+E

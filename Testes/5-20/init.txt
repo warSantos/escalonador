@@ -1,0 +1,11 @@
+F 1
+R Testes/5-20/1.txt
+F 1
+R Testes/5-20/2.txt
+F 1
+R Testes/5-20/3.txt
+F 1
+R Testes/5-20/4.txt
+F 1
+R Testes/5-20/5.txt
+E

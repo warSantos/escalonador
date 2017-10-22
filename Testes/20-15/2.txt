@@ -1,0 +1,13 @@
+F 1
+R Testes/20-15/8.txt
+B 113
+F 1
+R Testes/20-15/9.txt
+D 355
+D 541
+D 28
+S 423
+B 733
+B 87
+A 813
+E

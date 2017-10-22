@@ -5,7 +5,11 @@
 #include "../headers/pm.h"
 
 #define PRIO_INIT 100 // define prioridade inicial do processo init.
-#define QUANTUM 5 // define a quantidade de instruções por um Q.
+#define QUANTUM 7 // define a quantidade de instruções por um Q.
+#define ESC 1 // define qual algoritmo de escalonamento deve ser utilizado.
+#define BASE 0 // define o o limite de comparação de prioridade
+               // para o algoritmo de prioridade.
+#define MINERA 1 // define se dever ser utilizada a função minera.
 
 int main(int argc, char **argv){                
     
@@ -21,28 +25,35 @@ int main(int argc, char **argv){
     // Menu de indentificação dos comandos vindos do commander.
     while(read(0, &inst, 1)){        
         
-        //newPid = fcfs();                
-        //newPid = fcfs(newPid);                
-        //newPid = roundRobin(newPid);
-        newPid = priStatic(0);        
-        //newPid = priDinamic(0, -2);
+        // escolhe processo a ser escalonado.
+        if(ESC == 1){
+            
+            newPid = fcfs();
+        }else if(ESC == 2){
+            
+            newPid = roundRobin(newPid);
+        }else if(ESC == 3){
+            
+            newPid = priStatic(BASE);
+        }        
+        
         if(newPid == -1){
-                  
-            printf("%s\n", argv[2]);
-            printf("TERMINADO.\n");
-            minera(argv[2], (char) (QUANTUM + 48));
+                              
+            callReporter();
+            if(MINERA){
+                
+                minera(argv[2], (char) (QUANTUM + 48));
+            }
             return 0;
         }        
+        // realiza troca de contexto.
         trocaContexto(newPid , QUANTUM);                
         if(inst == 'Q'){ // executa a próxima instrução de um processo.
                         
             executaProcesso(manager->cpu);            
         }else if(inst == 'U'){ // Desbloqueia um processo bloqueado.
             
-            if(unblock(manager->pidBloq, manager->pidPronto, manager->pidExec) == -1){
-                
-                printf("SEM PROCESSOS NA FILA DE BLOQUEADOS.\n");
-            }
+            unblock(manager->pidBloq, manager->pidPronto, manager->pidExec);                
         }else if(inst == 'P'){ // chama o reporter.
                         
             callReporter();                 
@@ -52,12 +63,12 @@ int main(int argc, char **argv){
             return 0;
         }else{
             
+            if(MINERA){
+                
+                minera(argv[2], (char) (QUANTUM + 48));
+            }
             printf("Instrução: %c linha: %d, ignorada!\n", inst , manager->tempoGeral + 1);
-        }
-        //printf("**** %d %c *****\n", manager->tempoGeral, inst);
-        // aqui entra a política de escalonamento.
-        // se for hora de escalonar um processo
-            // então escalona.        
+        }        
         manager->tempoGeral++; 
     }       
     return 0;

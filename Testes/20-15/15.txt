@@ -1,0 +1,11 @@
+F 1
+R Testes/20-15/19.txt
+A 619
+B 604
+F 1
+R Testes/20-15/19.txt
+F 1
+R Testes/20-15/20.txt
+A 647
+B 117
+E

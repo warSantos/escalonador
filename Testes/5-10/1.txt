@@ -1,0 +1,11 @@
+S 561
+B 438
+B 476
+F 1
+R Testes/5-10/4.txt
+D 660
+D 207
+F 1
+R Testes/5-10/5.txt
+B 228
+E

@@ -1,0 +1,12 @@
+S 565
+B 520
+F 1
+R Testes/10-10/10.txt
+S 396
+F 1
+R Testes/10-10/10.txt
+F 1
+R Testes/10-10/10.txt
+S 69
+A 8
+E

@@ -1,0 +1,21 @@
+F 1
+R Testes/10-10/1.txt
+F 1
+R Testes/10-10/2.txt
+F 1
+R Testes/10-10/3.txt
+F 1
+R Testes/10-10/4.txt
+F 1
+R Testes/10-10/5.txt
+F 1
+R Testes/10-10/6.txt
+F 1
+R Testes/10-10/7.txt
+F 1
+R Testes/10-10/8.txt
+F 1
+R Testes/10-10/9.txt
+F 1
+R Testes/10-10/10.txt
+E

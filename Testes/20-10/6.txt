@@ -1,0 +1,11 @@
+F 1
+R Testes/20-10/11.txt
+F 1
+R Testes/20-10/13.txt
+F 1
+R Testes/20-10/18.txt
+D 949
+D 817
+A 121
+B 566
+E

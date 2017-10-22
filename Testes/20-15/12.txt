@@ -1,0 +1,10 @@
+S 635
+F 1
+R Testes/20-15/18.txt
+F 1
+R Testes/20-15/19.txt
+S 226
+B 497
+B 679
+A 118
+E

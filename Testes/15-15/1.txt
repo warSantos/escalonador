@@ -1,0 +1,10 @@
+B 398
+B 962
+B 82
+F 1
+R Testes/15-15/4.txt
+B 719
+S 895
+F 1
+R Testes/15-15/4.txt
+E

@@ -1,0 +1,8 @@
+A 680
+F 1
+R Testes/20-10/12.txt
+F 1
+R Testes/20-10/18.txt
+B 62
+B 218
+E

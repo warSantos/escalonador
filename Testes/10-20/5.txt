@@ -1,0 +1,23 @@
+A 636
+F 1
+R Testes/10-20/8.txt
+F 1
+R Testes/10-20/8.txt
+B 609
+D 722
+B 440
+B 895
+D 734
+S 272
+B 899
+A 809
+F 1
+R Testes/10-20/9.txt
+S 488
+A 817
+B 464
+F 1
+R Testes/10-20/7.txt
+A 358
+B 906
+E

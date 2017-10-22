@@ -1,0 +1,11 @@
+S 738
+B 687
+F 1
+R Testes/20-10/15.txt
+D 224
+A 222
+A 638
+D 607
+F 1
+R Testes/20-10/13.txt
+E

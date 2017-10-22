@@ -1,0 +1,10 @@
+D 13
+S 203
+F 1
+R Testes/20-10/20.txt
+S 656
+S 458
+S 520
+F 1
+R Testes/20-10/13.txt
+E
